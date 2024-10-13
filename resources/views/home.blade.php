@@ -5,16 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PoolSafe - Online Voting System</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="{{ asset('css/nav-style.css') }}" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <header class="bg-blue-600 text-white">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <div class="font-bold text-xl">PoolSafe</div>
-            <div>
-                
-        </nav>
-    </header>
 
+<x-nav-bar></x-nav-bar>
+
+<body class="bg-gray-100">
     <main class="container mx-auto px-6 py-8">
         <section class="text-center mb-12">
             <h1 class="text-4xl font-bold mb-4">Secure Online Voting Made Easy</h1>
