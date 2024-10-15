@@ -1,3 +1,4 @@
+<link href="{{ asset('css/nav-style.css') }}" rel="stylesheet">
 @extends('layouts.header')
 
 @section('content')
