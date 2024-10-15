@@ -5,22 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class organizations extends Model
+class Organization extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'description', 'created_by'];
 
-    public function createdBy()
+    public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function elections()
+    public function members()
     {
-        return $this->hasMany(Election::class);
-    }
-
-    public function voters()
-    {
-        return $this->hasMany(Voter::class);
+        return $this->belongsToMany(User::class)->withPivot('role');
     }
 }
