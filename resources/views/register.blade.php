@@ -1,5 +1,4 @@
-<link href="{{ asset('css/nav-style.css') }}" rel="stylesheet">
-@extends('layouts.header')
+@extends('components.nav-bar')
 
 @section('content')
 <div class="container">
