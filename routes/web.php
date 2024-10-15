@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-
+use App\Http\Controllers\OrganizationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,9 +22,12 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
+Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
+Route::get('/organizations/{organization}', [OrganizationController::class, 'show'])->name('organizations.show');
+Route::get('/organizations/{organization}/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');
+Route::get('/organizations', [OrganizationController::class, 'index'])->name('organizations.index');
+Route::put('/organizations/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
 
 Route::get('/about-us', function () {
     return view('aboutus');

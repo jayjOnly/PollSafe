@@ -21,7 +21,7 @@
                 <ul class="nav-menu">
                     <li><a href="/" class="nav-links">Home</a></li>
                     <li><a href="/about-us" class="nav-links">About Us</a></li>
-                    <li><a href="/contact" class="nav-links">Contact</a></li>
+                    <li><a href="/organizations" class="nav-links">Organization</a></li>
                     <li><a href="/faq" class="nav-links">FAQ</a></li>
                     @guest
                     @if (Route::has('login'))
