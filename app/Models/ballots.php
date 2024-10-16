@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ballots extends Model
+class Ballots extends Model
 {
     protected $fillable = ['election_id', 'voter_id', 'cast_at', 'encrypted_choice'];
 
@@ -15,16 +15,16 @@ class ballots extends Model
 
     public function election()
     {
-        return $this->belongsTo(Election::class);
+        return $this->belongsTo(Elections::class);
     }
 
     public function voter()
     {
-        return $this->belongsTo(Voter::class);
+        return $this->belongsTo(Voters::class);
     }
 
     public function voteRecords()
     {
-        return $this->hasMany(VoteRecord::class);
+        return $this->hasMany(VoteRecords::class);
     }
 }

@@ -18,14 +18,14 @@ class CreateOrganizationsTable extends Migration
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
 
-        Schema::create('organization_user', function (Blueprint $table) {
+        Schema::create('organizations_user', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('organization_id');
+            $table->unsignedBigInteger('organizations_id');
             $table->unsignedBigInteger('user_id');
             $table->string('role');
             $table->timestamps();
 
-            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
+            $table->foreign('organizations_id')->references('id')->on('organizations')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

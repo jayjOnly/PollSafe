@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\audit_logs;
 use App\Http\Requests\Storeaudit_logsRequest;
 use App\Http\Requests\Updateaudit_logsRequest;
+use App\Models\AuditLogs;
 
 class AuditLogsController extends Controller
 {
@@ -42,10 +43,10 @@ class AuditLogsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\audit_logs  $audit_logs
+     * @param  \App\Models\AuditLogs  $audit_logs
      * @return \Illuminate\Http\Response
      */
-    public function show(audit_logs $audit_logs)
+    public function show(AuditLogs $audit_logs)
     {
         //
     }
@@ -53,10 +54,10 @@ class AuditLogsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\audit_logs  $audit_logs
+     * @param  \App\Models\AuditLogs  $audit_logs
      * @return \Illuminate\Http\Response
      */
-    public function edit(audit_logs $audit_logs)
+    public function edit(AuditLogs $audit_logs)
     {
         //
     }
@@ -65,10 +66,10 @@ class AuditLogsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Updateaudit_logsRequest  $request
-     * @param  \App\Models\audit_logs  $audit_logs
+     * @param  \App\Models\AuditLogs  $audit_logs
      * @return \Illuminate\Http\Response
      */
-    public function update(Updateaudit_logsRequest $request, audit_logs $audit_logs)
+    public function update(Updateaudit_logsRequest $request, AuditLogs $audit_logs)
     {
         //
     }
@@ -76,10 +77,10 @@ class AuditLogsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\audit_logs  $audit_logs
+     * @param  \App\Models\AuditLogs  $audit_logs
      * @return \Illuminate\Http\Response
      */
-    public function destroy(audit_logs $audit_logs)
+    public function destroy(AuditLogs $audit_logs)
     {
         //
     }

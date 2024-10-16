@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\vote_records;
 use App\Http\Requests\Storevote_recordsRequest;
 use App\Http\Requests\Updatevote_recordsRequest;
+use App\Models\VoteRecords;
 
 class VoteRecordsController extends Controller
 {
@@ -42,10 +43,10 @@ class VoteRecordsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\vote_records  $vote_records
+     * @param  \App\Models\VoteRecords  $vote_records
      * @return \Illuminate\Http\Response
      */
-    public function show(vote_records $vote_records)
+    public function show(VoteRecords $vote_records)
     {
         //
     }
@@ -53,10 +54,10 @@ class VoteRecordsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\vote_records  $vote_records
+     * @param  \App\Models\VoteRecords  $vote_records
      * @return \Illuminate\Http\Response
      */
-    public function edit(vote_records $vote_records)
+    public function edit(VoteRecords $vote_records)
     {
         //
     }
@@ -65,10 +66,10 @@ class VoteRecordsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Updatevote_recordsRequest  $request
-     * @param  \App\Models\vote_records  $vote_records
+     * @param  \App\Models\VoteRecords  $vote_records
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatevote_recordsRequest $request, vote_records $vote_records)
+    public function update(Updatevote_recordsRequest $request, VoteRecords $vote_records)
     {
         //
     }
@@ -76,10 +77,10 @@ class VoteRecordsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\vote_records  $vote_records
+     * @param  \App\Models\VoteRecords  $vote_records
      * @return \Illuminate\Http\Response
      */
-    public function destroy(vote_records $vote_records)
+    public function destroy(VoteRecords $vote_records)
     {
         //
     }

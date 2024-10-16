@@ -5,9 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Organization extends Model
+class Organizations extends Model
 {
     use HasFactory;
+    protected $table = 'organizations';
 
     protected $fillable = ['name', 'description', 'created_by'];
 
