@@ -42,10 +42,10 @@ class VotersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Http\Response
      */
-    public function show(voters $voters)
+    public function show(Voters $voters)
     {
         //
     }
@@ -53,10 +53,10 @@ class VotersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Http\Response
      */
-    public function edit(voters $voters)
+    public function edit(Voters $voters)
     {
         //
     }
@@ -65,10 +65,10 @@ class VotersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdatevotersRequest  $request
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatevotersRequest $request, voters $voters)
+    public function update(UpdatevotersRequest $request, Voters $voters)
     {
         //
     }
@@ -76,10 +76,10 @@ class VotersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Http\Response
      */
-    public function destroy(voters $voters)
+    public function destroy(Voters $voters)
     {
         //
     }
