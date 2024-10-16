@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\candidates;
+use App\Models\Candidates;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class CandidatesPolicy
@@ -25,10 +25,10 @@ class CandidatesPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, candidates $candidates)
+    public function view(User $user, Candidates $candidates)
     {
         //
     }
@@ -48,10 +48,10 @@ class CandidatesPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, candidates $candidates)
+    public function update(User $user, Candidates $candidates)
     {
         //
     }
@@ -60,10 +60,10 @@ class CandidatesPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, candidates $candidates)
+    public function delete(User $user, Candidates $candidates)
     {
         //
     }
@@ -72,10 +72,10 @@ class CandidatesPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, candidates $candidates)
+    public function restore(User $user, Candidates $candidates)
     {
         //
     }
@@ -84,10 +84,10 @@ class CandidatesPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, candidates $candidates)
+    public function forceDelete(User $user, Candidates $candidates)
     {
         //
     }

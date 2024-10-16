@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\voters;
+use App\Models\Voters;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class VotersPolicy
@@ -25,10 +25,10 @@ class VotersPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, voters $voters)
+    public function view(User $user, Voters $voters)
     {
         //
     }
@@ -48,10 +48,10 @@ class VotersPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, voters $voters)
+    public function update(User $user, Voters $voters)
     {
         //
     }
@@ -60,10 +60,10 @@ class VotersPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, voters $voters)
+    public function delete(User $user, Voters $voters)
     {
         //
     }
@@ -72,10 +72,10 @@ class VotersPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, voters $voters)
+    public function restore(User $user, Voters $voters)
     {
         //
     }
@@ -84,10 +84,10 @@ class VotersPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\voters  $voters
+     * @param  \App\Models\Voters  $voters
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, voters $voters)
+    public function forceDelete(User $user, Voters $voters)
     {
         //
     }

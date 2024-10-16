@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\audit_logs;
+use App\Models\AuditLogs;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AuditLogsPolicy
@@ -25,10 +25,10 @@ class AuditLogsPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\audit_logs  $auditLogs
+     * @param  \App\Models\AuditLogs  $auditLogs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, audit_logs $auditLogs)
+    public function view(User $user, AuditLogs $auditLogs)
     {
         //
     }
@@ -48,10 +48,10 @@ class AuditLogsPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\audit_logs  $auditLogs
+     * @param  \App\Models\AuditLogs  $auditLogs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, audit_logs $auditLogs)
+    public function update(User $user, AuditLogs $auditLogs)
     {
         //
     }
@@ -60,10 +60,10 @@ class AuditLogsPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\audit_logs  $auditLogs
+     * @param  \App\Models\AuditLogs  $auditLogs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, audit_logs $auditLogs)
+    public function delete(User $user, AuditLogs $auditLogs)
     {
         //
     }
@@ -72,10 +72,10 @@ class AuditLogsPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\audit_logs  $auditLogs
+     * @param  \App\Models\AuditLogs  $auditLogs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, audit_logs $auditLogs)
+    public function restore(User $user, AuditLogs $auditLogs)
     {
         //
     }
@@ -84,10 +84,10 @@ class AuditLogsPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\audit_logs  $auditLogs
+     * @param  \App\Models\AuditLogs  $auditLogs
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, audit_logs $auditLogs)
+    public function forceDelete(User $user, AuditLogs $auditLogs)
     {
         //
     }

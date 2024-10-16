@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organization;
+use App\Models\Organizations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class OrganizationController extends Controller
+class OrganizationsController extends Controller
 {
     public function index()
     {
-        $organizations = Organization::all();
+        $organizations = Organizations::all();
         return view('organizations.all', compact('organizations'));
     }
 
@@ -33,40 +33,40 @@ class OrganizationController extends Controller
                 ->with('error', 'Anda harus login untuk membuat organisasi.');
         }
 
-        $organization = new Organization($validatedData);
-        $organization->created_by = $user->id;
-        $organization->save();
+        $organizations = new Organizations($validatedData);
+        $organizations->created_by = $user->id;
+        $organizations->save();
 
-        $organization->members()->attach($user->id, ['role' => 'admin']);
+        $organizations->members()->attach($user->id, ['role' => 'admin']);
 
-        return redirect()->route('organizations.show', $organization)
+        return redirect()->route('organizations.show', $organizations)
             ->with('success', 'Organisasi berhasil dibuat!');
     }
 
-    public function show(Organization $organization)
+    public function show(Organizations $organizations)
     {
-        return view('organizations.show', compact('organization'));
+        return view('organizations.show', compact('organizations'));
     }
 
-    public function edit(Organization $organization)
+    public function edit(Organizations $organization)
     {
         // validasi tidak berhasil
-        // $this->authorize('update', $organization);
-        return view('organizations.edit', compact('organization'));
+        // $this->authorize('update', $organizations);
+        return view('organizations.edit', compact('organizations'));
     }
 
-    public function update(Request $request, Organization $organization)
+    public function update(Request $request, Organizations $organizations)
     {
-        // $this->authorize('update', $organization);
+        // $this->authorize('update', $organizations);
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:1000',
         ]);
 
-        $organization->update($validatedData);
+        $organizations->update($validatedData);
 
-        return redirect()->route('organizations.show', $organization)
+        return redirect()->route('organizations.show', $organizations)
             ->with('success', 'Organisasi berhasil diperbarui!');
     }
 }
