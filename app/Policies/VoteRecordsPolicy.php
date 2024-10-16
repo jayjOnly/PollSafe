@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\User;
-use App\Models\vote_records;
+use App\Models\VoteRecords;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class VoteRecordsPolicy
@@ -25,10 +25,10 @@ class VoteRecordsPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote_records  $voteRecords
+     * @param  \App\Models\VoteRecords  $voteRecords
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, vote_records $voteRecords)
+    public function view(User $user, VoteRecords $voteRecords)
     {
         //
     }
@@ -48,10 +48,10 @@ class VoteRecordsPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote_records  $voteRecords
+     * @param  \App\Models\VoteRecords  $voteRecords
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, vote_records $voteRecords)
+    public function update(User $user, VoteRecords $voteRecords)
     {
         //
     }
@@ -60,10 +60,10 @@ class VoteRecordsPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote_records  $voteRecords
+     * @param  \App\Models\VoteRecords  $voteRecords
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, vote_records $voteRecords)
+    public function delete(User $user, VoteRecords $voteRecords)
     {
         //
     }
@@ -72,10 +72,10 @@ class VoteRecordsPolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote_records  $voteRecords
+     * @param  \App\Models\VoteRecords  $voteRecords
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, vote_records $voteRecords)
+    public function restore(User $user, VoteRecords $voteRecords)
     {
         //
     }
@@ -84,10 +84,10 @@ class VoteRecordsPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\vote_records  $voteRecords
+     * @param  \App\Models\VoteRecords  $voteRecords
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, vote_records $voteRecords)
+    public function forceDelete(User $user, VoteRecords $voteRecords)
     {
         //
     }

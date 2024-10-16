@@ -42,10 +42,10 @@ class ElectionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\elections  $elections
+     * @param  \App\Models\Elections  $elections
      * @return \Illuminate\Http\Response
      */
-    public function show(elections $elections)
+    public function show(Elections $elections)
     {
         //
     }
@@ -53,10 +53,10 @@ class ElectionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\elections  $elections
+     * @param  \App\Models\Elections  $elections
      * @return \Illuminate\Http\Response
      */
-    public function edit(elections $elections)
+    public function edit(Elections $elections)
     {
         //
     }
@@ -65,10 +65,10 @@ class ElectionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateelectionsRequest  $request
-     * @param  \App\Models\elections  $elections
+     * @param  \App\Models\Elections  $elections
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateelectionsRequest $request, elections $elections)
+    public function update(UpdateelectionsRequest $request, Elections $elections)
     {
         //
     }
@@ -76,10 +76,10 @@ class ElectionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\elections  $elections
+     * @param  \App\Models\Elections  $elections
      * @return \Illuminate\Http\Response
      */
-    public function destroy(elections $elections)
+    public function destroy(Elections $elections)
     {
         //
     }
