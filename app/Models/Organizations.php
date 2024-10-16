@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Organizations extends Model
 {
     use HasFactory;
+    protected $table = 'organizations';
 
     protected $fillable = ['name', 'description', 'created_by'];
 

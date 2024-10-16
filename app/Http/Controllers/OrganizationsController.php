@@ -43,9 +43,9 @@ class OrganizationsController extends Controller
             ->with('success', 'Organisasi berhasil dibuat!');
     }
 
-    public function show(Organizations $organizations)
+    public function show(Organizations $organization)
     {
-        return view('organizations.show', compact('organizations'));
+        return view('organizations.show', compact('organization'));
     }
 
     public function edit(Organizations $organization)
