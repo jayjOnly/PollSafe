@@ -55,12 +55,12 @@ class User extends Authenticatable
 
     public function organizations()
     {
-        return $this->belongsToMany(Organization::class)->withPivot('role');
+        return $this->belongsToMany(Organizations::class)->withPivot('role');
     }
 
     public function createdOrganizations()
     {
-        return $this->hasMany(Organization::class, 'created_by');
+        return $this->hasMany(Organizations::class, 'created_by');
     }
 
     public function voter()
