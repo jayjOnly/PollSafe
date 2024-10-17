@@ -20,7 +20,9 @@ class Organizations extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class)->withPivot('role');
+        return $this->belongsToMany(User::class, 'organizations_user')
+                    ->withPivot('role')
+                    ->withTimestamps();
     }
 
     protected static function boot()

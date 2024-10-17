@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organizations;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -68,5 +69,10 @@ class OrganizationsController extends Controller
 
         return redirect()->route('organizations.show', $organization->uuid)
             ->with('success', 'Organisasi berhasil diperbarui!');
+    }
+
+    public function manage(Organizations $organization){
+        $users = User::all();
+        return view('organizations.manage', compact('organization','users'));
     }
 }
