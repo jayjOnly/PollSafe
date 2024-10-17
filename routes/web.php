@@ -24,10 +24,10 @@ Route::get('/dashboard', function () {
 
 Route::get('/organizations/create', [OrganizationsController::class, 'create'])->name('organizations.create');
 Route::post('/organizations', [OrganizationsController::class, 'store'])->name('organizations.store');
-Route::get('/organizations/{organization}', [OrganizationsController::class, 'show'])->name('organizations.show');
-Route::get('/organizations/{organization}/edit', [OrganizationsController::class, 'edit'])->name('organizations.edit');
+Route::get('/organizations/{organization:uuid}', [OrganizationsController::class, 'show'])->name('organizations.show');
+Route::get('/organizations/{organization:uuid}/edit', [OrganizationsController::class, 'edit'])->name('organizations.edit');
 Route::get('/organizations', [OrganizationsController::class, 'index'])->name('organizations.index');
-Route::put('/organizations/{organization}', [OrganizationsController::class, 'update'])->name('organizations.update');
+Route::put('/organizations/{organization:uuid}', [OrganizationsController::class, 'update'])->name('organizations.update');
 
 Route::get('/about-us', function () {
     return view('aboutus');

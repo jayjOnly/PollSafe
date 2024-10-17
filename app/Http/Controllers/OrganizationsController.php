@@ -52,21 +52,21 @@ class OrganizationsController extends Controller
     {
         // validasi tidak berhasil
         // $this->authorize('update', $organizations);
-        return view('organizations.edit', compact('organizations'));
+        return view('organizations.edit', compact('organization'));
     }
 
-    public function update(Request $request, Organizations $organizations)
+    public function update(Request $request, Organizations $organization)
     {
-        // $this->authorize('update', $organizations);
+        // $this->authorize('update', $organization);
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:1000',
         ]);
 
-        $organizations->update($validatedData);
+        $organization->update($validatedData);
 
-        return redirect()->route('organizations.show', $organizations)
+        return redirect()->route('organizations.show', $organization->uuid)
             ->with('success', 'Organisasi berhasil diperbarui!');
     }
 }
