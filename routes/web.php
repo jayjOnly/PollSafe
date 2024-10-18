@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrganizationsController;
+use App\Http\Controllers\OrganizationMemberController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +28,20 @@ Route::get('/organizations/create', [OrganizationsController::class, 'create'])-
 Route::post('/organizations', [OrganizationsController::class, 'store'])->name('organizations.store');
 Route::get('/organizations/{organization:uuid}', [OrganizationsController::class, 'show'])->name('organizations.show');
 Route::get('/organizations/{organization:uuid}/edit', [OrganizationsController::class, 'edit'])->name('organizations.edit');
+Route::get('/organizations/{organization:uuid}/manage', [OrganizationsController::class, 'manage'])->name('organizations.manage');
 Route::get('/organizations', [OrganizationsController::class, 'index'])->name('organizations.index');
 Route::put('/organizations/{organization:uuid}', [OrganizationsController::class, 'update'])->name('organizations.update');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/organizations/{organization}/members', [OrganizationMemberController::class, 'index'])
+        ->name('organizations.members.index');
+    Route::post('/organizations/{organization}/members/invite', [OrganizationMemberController::class, 'invite'])
+        ->name('organizations.members.invite');
+    Route::put('/organizations/{organization}/members/{member}/role', [OrganizationMemberController::class, 'updateRole'])
+        ->name('organizations.members.updateRole');
+    Route::delete('/organizations/{organization}/members/{member}', [OrganizationMemberController::class, 'remove'])
+        ->name('organizations.members.remove');
+});
 
 Route::get('/about-us', function () {
     return view('aboutus');

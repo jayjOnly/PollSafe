@@ -32,13 +32,13 @@
                         <td>{{ $member->email }}</td>
                         <td>{{ ucfirst($member->pivot->role) }}</td>
                         @if(Auth::id() == $organization->created_by && Auth::id() != $member->id)
-                            <td>
+                            {{-- <td>
                                 <form action="{{ route('organizations.remove_member', [$organization, $member]) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                                 </form>
-                            </td>
+                            </td> --}}
                         @endif
                     </tr>
                 @endforeach
@@ -50,7 +50,7 @@
         <div class="admin-actions">
             <h3>Aksi Admin</h3>
             <a href="{{ route('organizations.edit', $organization) }}" class="btn btn-primary">Edit Organisasi</a>
-            {{-- <a href="{{ route('organizations.invite', $organization) }}" class="btn btn-success">Undang Anggota</a> --}}
+            <a href="{{ route('organizations.members.index', $organization) }}" class="btn btn-success">Manage</a>
         </div>
     @endif
 </div>
