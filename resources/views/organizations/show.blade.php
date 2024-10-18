@@ -12,6 +12,28 @@
         <p><strong>Jumlah anggota:</strong> {{ $organization->members->count() }}</p>
     </div>
 
+    <div class="candidate-list">
+        <h3>Daftar Kandidat</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Gambar</th>
+                    <th>Nama</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($candidates as $candidate)
+                    <tr>
+                        <td>
+                            <img src="{{ asset('storage/' . $candidate->image_path) }}" style="width: 100px; height: auto;">
+                        </td>
+                        <td>{{ $candidate->name }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
     <div class="member-list">
         <h3>Daftar Anggota</h3>
         <table>
@@ -51,6 +73,7 @@
             <h3>Aksi Admin</h3>
             <a href="{{ route('organizations.edit', $organization) }}" class="btn btn-primary">Edit Organisasi</a>
             <a href="{{ route('organizations.members.index', $organization) }}" class="btn btn-success">Manage</a>
+            <a href="{{ route('organizations.add_candidate', $organization) }}" class="btn btn-info">Add Candidate</a>                       
         </div>
     @endif
 </div>
@@ -113,6 +136,9 @@
     }
     .btn-danger {
         background-color: #dc3545;
+    }
+    .btn-info {
+        background-color: #17a2b8; /* Add a style for the info button */
     }
     .btn-sm {
         padding: 5px 10px;
