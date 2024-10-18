@@ -34,7 +34,7 @@
     font-size: 22px;
     color: var(--white);
     justify-self: start;
-    margin-left: 20px;
+    margin-left: 30px;
     font-weight: 600;
 }
 
@@ -44,11 +44,16 @@
 
 .nav-menu {
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(6, auto);
     list-style: none;
     text-align: center;
     width: 70%;
     justify-self: end;
+}
+
+.nav-link:hover { /* Specifically for Login and Register Button */
+    color: var(--electricblue);
+    transition: all 0.2s ease-out;
 }
 
 .nav-links {
@@ -116,14 +121,27 @@
 
     .nav-links {
         text-align: center;
-        line-height: 60px;
+        line-height: 40px;
         width: 100%;
         display: table;
     }
 
     .nav-links:hover {
-        background-color: var(--brightblue);
+        background-color: var(--electricblue);
         color: black;
+        transition: all 0.4s ease-out;
+    }
+
+    .nav-link { /* Specifically for Login and Register Button */
+        text-align: center;
+        line-height: 40px;
+        width: 100%;
+        display: table;
+    }
+
+    .nav-link:hover { /* Specifically for Login and Register Button */
+        background-color: var(--brightblue);
+        color: var(--white);
         transition: all 0.4s ease-out;
     }
 

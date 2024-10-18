@@ -42,10 +42,10 @@ class CandidatesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Http\Response
      */
-    public function show(candidates $candidates)
+    public function show(Candidates $candidates)
     {
         //
     }
@@ -53,10 +53,10 @@ class CandidatesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Http\Response
      */
-    public function edit(candidates $candidates)
+    public function edit(Candidates $candidates)
     {
         //
     }
@@ -65,10 +65,10 @@ class CandidatesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdatecandidatesRequest  $request
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatecandidatesRequest $request, candidates $candidates)
+    public function update(UpdatecandidatesRequest $request, Candidates $candidates)
     {
         //
     }
@@ -76,10 +76,10 @@ class CandidatesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\candidates  $candidates
+     * @param  \App\Models\Candidates  $candidates
      * @return \Illuminate\Http\Response
      */
-    public function destroy(candidates $candidates)
+    public function destroy(Candidates $candidates)
     {
         //
     }

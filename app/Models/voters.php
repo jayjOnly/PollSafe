@@ -21,6 +21,6 @@ class voters extends Model
 
     public function ballots()
     {
-        return $this->hasMany(Ballot::class);
+        return $this->hasMany(Ballots::class);
     }
 }

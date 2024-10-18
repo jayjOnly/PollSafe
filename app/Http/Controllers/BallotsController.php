@@ -42,10 +42,10 @@ class BallotsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ballots  $ballots
+     * @param  \App\Models\Ballots  $ballots
      * @return \Illuminate\Http\Response
      */
-    public function show(ballots $ballots)
+    public function show(Ballots $ballots)
     {
         //
     }
@@ -53,10 +53,10 @@ class BallotsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ballots  $ballots
+     * @param  \App\Models\Ballots  $ballots
      * @return \Illuminate\Http\Response
      */
-    public function edit(ballots $ballots)
+    public function edit(Ballots $ballots)
     {
         //
     }
@@ -65,7 +65,7 @@ class BallotsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateballotsRequest  $request
-     * @param  \App\Models\ballots  $ballots
+     * @param  \App\Models\Ballots  $ballots
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateballotsRequest $request, ballots $ballots)
@@ -76,10 +76,10 @@ class BallotsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ballots  $ballots
+     * @param  \App\Models\Ballots  $ballots
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ballots $ballots)
+    public function destroy(Ballots $ballots)
     {
         //
     }

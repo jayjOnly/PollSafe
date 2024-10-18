@@ -2,85 +2,71 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\organizations;
-use App\Http\Requests\StoreorganizationsRequest;
-use App\Http\Requests\UpdateorganizationsRequest;
+use App\Models\Organizations;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrganizationsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $organizations = Organizations::all();
+        return view('organizations.all', compact('organizations'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('organizations.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreorganizationsRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreorganizationsRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'nullable|max:1000',
+        ]);
+
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login')
+                ->with('error', 'Anda harus login untuk membuat organisasi.');
+        }
+
+        $organizations = new Organizations($validatedData);
+        $organizations->created_by = $user->id;
+        $organizations->save();
+
+        $organizations->members()->attach($user->id, ['role' => 'admin']);
+
+        return redirect()->route('organizations.show', $organizations)
+            ->with('success', 'Organisasi berhasil dibuat!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\organizations  $organizations
-     * @return \Illuminate\Http\Response
-     */
-    public function show(organizations $organizations)
+    public function show(Organizations $organization)
     {
-        //
+        return view('organizations.show', compact('organization'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\organizations  $organizations
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(organizations $organizations)
+    public function edit(Organizations $organization)
     {
-        //
+        // validasi tidak berhasil
+        // $this->authorize('update', $organizations);
+        return view('organizations.edit', compact('organizations'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateorganizationsRequest  $request
-     * @param  \App\Models\organizations  $organizations
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateorganizationsRequest $request, organizations $organizations)
+    public function update(Request $request, Organizations $organizations)
     {
-        //
-    }
+        // $this->authorize('update', $organizations);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\organizations  $organizations
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(organizations $organizations)
-    {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'nullable|max:1000',
+        ]);
+
+        $organizations->update($validatedData);
+
+        return redirect()->route('organizations.show', $organizations)
+            ->with('success', 'Organisasi berhasil diperbarui!');
     }
 }

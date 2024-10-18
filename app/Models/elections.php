@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class elections extends Model
+class Elections extends Model
 {
     protected $fillable = [
         'organization_id', 'title', 'description', 'start_date', 'end_date', 'status', 'type'
@@ -23,11 +23,11 @@ class elections extends Model
 
     public function candidates()
     {
-        return $this->hasMany(Candidate::class);
+        return $this->hasMany(Candidates::class);
     }
 
     public function ballots()
     {
-        return $this->hasMany(Ballot::class);
+        return $this->hasMany(Ballots::class);
     }
 }
