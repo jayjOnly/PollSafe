@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Organizations;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,21 +53,26 @@ class OrganizationsController extends Controller
     {
         // validasi tidak berhasil
         // $this->authorize('update', $organizations);
-        return view('organizations.edit', compact('organizations'));
+        return view('organizations.edit', compact('organization'));
     }
 
-    public function update(Request $request, Organizations $organizations)
+    public function update(Request $request, Organizations $organization)
     {
-        // $this->authorize('update', $organizations);
+        // $this->authorize('update', $organization);
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'nullable|max:1000',
         ]);
 
-        $organizations->update($validatedData);
+        $organization->update($validatedData);
 
-        return redirect()->route('organizations.show', $organizations)
+        return redirect()->route('organizations.show', $organization->uuid)
             ->with('success', 'Organisasi berhasil diperbarui!');
+    }
+
+    public function manage(Organizations $organization){
+        $users = User::all();
+        return view('organizations.manage', compact('organization','users'));
     }
 }
