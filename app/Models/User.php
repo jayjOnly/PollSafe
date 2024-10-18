@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function createdOrganizations()
     {
-        return $this->hasMany(Organization::class, 'created_by');
+        return $this->hasMany(Organizations::class, 'created_by');
     }
 
     public function voter()

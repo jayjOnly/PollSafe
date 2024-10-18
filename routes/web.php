@@ -40,6 +40,10 @@ Route::middleware(['auth'])->group(function () {
         ->name('organizations.members.updateRole');
     Route::delete('/organizations/{organization}/members/{member}', [OrganizationMemberController::class, 'remove'])
         ->name('organizations.members.remove');
+    Route::get('/organizations/{organization:uuid}/add-candidate', [OrganizationsController::class, 'addCandidate'])
+        ->name('organizations.add_candidate');
+    Route::post('/organizations/{organization:uuid}/candidates', [OrganizationsController::class, 'storeCandidate'])
+        ->name('organizations.store_candidate');
 });
 
 Route::get('/about-us', function () {
