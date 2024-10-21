@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class voters extends Model
+class Voters extends Model
 {
     protected $fillable = ['user_id', 'organization_id', 'status'];
 
@@ -16,7 +16,7 @@ class voters extends Model
 
     public function organization()
     {
-        return $this->belongsTo(Organization::class);
+        return $this->belongsTo(Organizations::class);
     }
 
     public function ballots()

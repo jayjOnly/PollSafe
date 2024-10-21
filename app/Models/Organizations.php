@@ -38,4 +38,9 @@ class Organizations extends Model
     {
         return 'uuid';
     }
+
+    public function candidates()
+    {
+        return $this->hasMany(CandidateTable::class, 'organization_uuid', 'uuid');
+    }
 }
