@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Organizations;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreOrganizationRequest;
+use App\Http\Requests\UpdateOrganizationRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Policies\OrganizationPolicy;
 
 class OrganizationsController extends Controller
 {
     public function index()
     {
-        $organizations = Organizations::all();
+        $organizations = Organizations::with('creator')->get();
         return view('organizations.all', compact('organizations'));
     }
 
@@ -20,59 +22,44 @@ class OrganizationsController extends Controller
         return view('organizations.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreOrganizationRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'nullable|max:1000',
+        $organization = Organizations::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'created_by' => Auth::id(),
         ]);
 
-        $user = Auth::user();
+        $organization->members()->attach(Auth::id(), ['role' => 'admin']);
 
-        if (!$user) {
-            return redirect()->route('login')
-                ->with('error', 'Anda harus login untuk membuat organisasi.');
-        }
-
-        $organizations = new Organizations($validatedData);
-        $organizations->created_by = $user->id;
-        $organizations->save();
-
-        $organizations->members()->attach($user->id, ['role' => 'admin']);
-
-        return redirect()->route('organizations.show', $organizations)
+        return redirect()
+            ->route('organizations.show', $organization->uuid)
             ->with('success', 'Organisasi berhasil dibuat!');
     }
 
     public function show(Organizations $organization)
     {
+        $organization->load(['creator', 'members']);
         return view('organizations.show', compact('organization'));
     }
 
     public function edit(Organizations $organization)
     {
-        // validasi tidak berhasil
-        // $this->authorize('update', $organizations);
         return view('organizations.edit', compact('organization'));
     }
 
-    public function update(Request $request, Organizations $organization)
+    public function update(UpdateOrganizationRequest $request, Organizations $organization)
     {
-        // $this->authorize('update', $organization);
-
-        $validatedData = $request->validate([
-            'name' => 'required|max:255',
-            'description' => 'nullable|max:1000',
-        ]);
-
-        $organization->update($validatedData);
-
-        return redirect()->route('organizations.show', $organization->uuid)
+        $organization->update($request->validated());
+        return redirect()
+            ->route('organizations.show', $organization->uuid)
             ->with('success', 'Organisasi berhasil diperbarui!');
     }
 
-    public function manage(Organizations $organization){
-        $users = User::all();
-        return view('organizations.manage', compact('organization','users'));
+    public function manage(Organizations $organization)
+    {
+        $this->authorize('manage', $organization);
+        $users = User::whereNotIn('id', $organization->members->pluck('id'))->get();
+        return view('organizations.manage', compact('organization', 'users'));
     }
 }
