@@ -10,6 +10,7 @@ class CreateOrganizationsTable extends Migration
     {
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description')->nullable();
             $table->unsignedBigInteger('created_by');
@@ -22,7 +23,7 @@ class CreateOrganizationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('organizations_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('role');
+            $table->enum('role', ['admin','member']);
             $table->timestamps();
 
             $table->foreign('organizations_id')->references('id')->on('organizations')->onDelete('cascade');
