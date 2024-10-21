@@ -41,6 +41,6 @@ class Organizations extends Model
 
     public function candidates()
     {
-        return $this->hasMany(candidateTable::class, 'organization_uuid', 'uuid');
+        return $this->hasMany(CandidateTable::class, 'organization_uuid', 'uuid');
     }
 }
