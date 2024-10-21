@@ -6,7 +6,7 @@ use App\Models\Organizations;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\candidateTable;
+use App\Models\CandidateTable;
 
 class OrganizationsController extends Controller
 {
@@ -103,7 +103,7 @@ class OrganizationsController extends Controller
         $user = User::where('email', $validatedData['email'])->first();
         $validatedData['user_id'] = $user->id;
 
-        candidateTable::create([
+        CandidateTable::create([
             'organization_uuid' => $organization->uuid,
             ...$validatedData,
             'image_path' => 'images/' . $imageName,
