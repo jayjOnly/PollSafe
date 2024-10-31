@@ -23,11 +23,13 @@ class RegisterRequest extends FormRequest
             'password' => [
                 'required',
                 'string',
-                Password::min(8) // min 8 characters
-                ->mixedCase() // must be at least 1 upper case and 1 lower case
-                ->numbers() // must be at least 1 number
-                ->symbols() // must be at least 1 symbols
-                ->uncompromised(), // check if the password is common
+                (
+                    Password::min(8) // min 8 characters
+                    ->mixedCase() // must be at least 1 upper case and 1 lower case
+                    ->numbers() // must be at least 1 number
+                    ->symbols() // must be at least 1 symbols
+                    ->uncompromised() // check if the password is common
+                ),
                 'confirmed'
             ],
         ];
