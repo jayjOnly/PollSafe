@@ -123,7 +123,13 @@
     input[type="email"].filled,
     input[type="password"].filled {
         background: white;
+        outline: none;
         border: 1px solid rgb(0, 105, 255);
+    }
+
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+        box-shadow: 0 4px 5px rgb(0, 105, 255);
     }
 
     .filled + label,
