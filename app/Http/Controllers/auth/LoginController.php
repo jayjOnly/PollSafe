@@ -16,7 +16,7 @@ class LoginController extends Controller
     public function login(LoginRequest $request) {
         if (isset($request->validator) && $request->validator->fails()) {
             return back()->withErrors([
-                'error' => $request->validator->errors(),
+                'error' => $request->validator->errors()->first(),
             ])->withInput($request->except('password'));
         }
 

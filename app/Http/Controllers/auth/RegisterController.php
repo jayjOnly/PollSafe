@@ -18,7 +18,7 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request) {
         if (isset($request->validator) && $request->validator->fails()) {
             return back()->withErrors([
-                'error' => $request->validator->errors(),
+                'error' => $request->validator->errors()->first(),
             ])->withInput($request->except('password'));
         }
 
