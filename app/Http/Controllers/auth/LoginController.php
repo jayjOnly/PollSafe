@@ -4,6 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\auth\LoginRequest;
+use App\Models\UserRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,8 +24,17 @@ class LoginController extends Controller
         $credentials = $request->validated();
 
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+            $defaultRedirect = redirect()->intended('home');
+            // testing role validation
+            if (Auth::user()->role === UserRole::ROLE_ADMIN) {
+                $request->session()->regenerate();
+                return redirect()->intended('dashboard');
+            } else if (Auth::user()->role === UserRole::ROLE_USER) {
+                $request->session()->regenerate();
+                return redirect()->intended('dashboard');
+            }
+
+            return $defaultRedirect;
         }
 
         return back()->withErrors([
