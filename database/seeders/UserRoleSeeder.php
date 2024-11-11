@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use DateTime;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -14,8 +15,8 @@ class UserRoleSeeder extends Seeder
     public function run(): void
     {
         DB::table('user_roles')->insert([
-            ['role' => 'Admin'],
-            ['role' => 'User'],
+            ['role' => 'Admin', 'created_at' => new DateTime()],
+            ['role' => 'User', 'created_at' => new DateTime()],
         ]);
     }
 }
