@@ -36,6 +36,7 @@
                 [new URL("{{ route('about-us') }}").pathname]: 'about-us-link',
                 [new URL("{{ route('faq') }}").pathname]: 'faq-link',
             };
+            
             const linkClass = linkClassList[new URL(window.location.href).pathname];
             if (linkClass) {
                 const linkTextList = document.getElementsByClassName(linkClass);

@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <x-nav-bar></x-nav-bar>
+    <x-nav-bar-guest></x-nav-bar-guest>
 
     <div class="container">
         <div class="upper-section">
