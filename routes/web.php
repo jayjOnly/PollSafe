@@ -1,10 +1,13 @@
 <?php
 
 use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\LogoutController;
 use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\onboarding\HomeController;
 use App\Http\Controllers\onboarding\AboutUsController;
 use App\Http\Controllers\onboarding\FAQController;
+use App\Http\Controllers\organization\OrganizationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,4 +24,10 @@ Route::middleware('guest')->group(function () {
 
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/register', [RegisterController::class, 'register']);
+});
+
+Route::middleware(['auth', 'share_user'])->group(function () {
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
+    Route::get('/organization', [OrganizationController::class, 'show'])->name('organization');
 });
