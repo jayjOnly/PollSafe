@@ -30,7 +30,7 @@ class RegisterController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
-            'role' => UserRole::ROLE_USER,
+            'role_id' => UserRole::ROLE_USER,
             'created_at' => new DateTime()
         ]);
 

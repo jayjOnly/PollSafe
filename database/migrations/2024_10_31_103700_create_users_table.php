@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedBigInteger('role');
+            $table->unsignedBigInteger('role_id');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -38,7 +38,7 @@ return new class extends Migration
         });
 
         Schema::table('users', function(Blueprint $table) {
-            $table->foreign('role')->references('id')->on('user_roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('user_roles')->onDelete('cascade');
         });
 
         Schema::table('sessions', function(Blueprint $table) {
@@ -52,8 +52,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['role']); // Remove the foreign key
-            $table->dropColumn('role'); // Remove the column
+            $table->dropForeign(['role_id']); // Remove the foreign key
+            $table->dropColumn('role_id'); // Remove the column
         });
 
         Schema::dropIfExists('sessions', function (Blueprint $table) {

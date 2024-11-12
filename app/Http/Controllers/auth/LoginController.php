@@ -26,10 +26,10 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $defaultRedirect = redirect()->intended('home');
             // testing role validation
-            if (Auth::user()->role === UserRole::ROLE_ADMIN) {
+            if (Auth::user()->role_id === UserRole::ROLE_ADMIN) {
                 $request->session()->regenerate();
                 return redirect()->intended('dashboard');
-            } else if (Auth::user()->role === UserRole::ROLE_USER) {
+            } else if (Auth::user()->role_id === UserRole::ROLE_USER) {
                 $request->session()->regenerate();
                 return redirect()->intended('dashboard');
             }

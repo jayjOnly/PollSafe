@@ -62,8 +62,8 @@ class User extends Authenticatable
                 $model->{$model->getKeyName()} = (string) Str::uuid();
             }
 
-            if (is_null($model->role)) {
-                $model->role = UserRole::ROLE_USER; // Set the default role to user
+            if (is_null($model->role_id)) {
+                $model->role_id = UserRole::ROLE_USER; // Set the default role to user
             }
         });
     }

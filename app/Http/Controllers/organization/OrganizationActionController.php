@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Requests\organization\AddOrganizationRequest;
 use App\Http\Requests\organization\EditOrganizationRequest;
 use App\Http\Requests\organization\DeleteOrganizationRequest;
+use App\Models\OrganizationRole;
 
 class OrganizationActionController extends Controller
 {
@@ -34,7 +35,7 @@ class OrganizationActionController extends Controller
         OrganizationMember::create([
             'organization_id' => $organization->id,
             'user_id' => Auth::id(),
-            'role' => 1,
+            'role_id' => OrganizationRole::ROLE_LEADER,
         ]);
 
         return redirect()->route('dashboard');

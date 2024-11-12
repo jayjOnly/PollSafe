@@ -19,7 +19,7 @@ class OrganizationMember extends Model
     protected $fillable = [
         'organization_id',
         'user_id',
-        'role'
+        'role_id'
     ];
 
     // Automatically generate a UUID for the id attribute

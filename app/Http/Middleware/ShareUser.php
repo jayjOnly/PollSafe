@@ -18,7 +18,7 @@ class ShareUser
     public function handle(Request $request, Closure $next): Response
     {
         $user_name = $request->user()->name;
-        $user_role = UserRole::where('id', $request->user()->role)->first()->role;
+        $user_role = UserRole::where('id', $request->user()->role_id)->first()->role;
         View::share('user_name', $user_name);
         View::share('user_role', $user_role);
         return $next($request);

@@ -15,14 +15,14 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('organization_id');
             $table->uuid('user_id');
-            $table->unsignedBigInteger('role');
+            $table->unsignedBigInteger('role_id');
             $table->timestamps();
         });
 
         Schema::table('organization_members', function(Blueprint $table) {
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('role')->references('id')->on('organization_roles')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('organization_roles')->onDelete('cascade');
         });
     }
 
@@ -32,8 +32,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('organization_members', function (Blueprint $table) {
-            $table->dropForeign(['organization_id', 'user_id', 'role']); // Remove the foreign key
-            $table->dropColumn(['organization_id', 'user_id', 'role']); // Remove the column
+            $table->dropForeign(['organization_id', 'user_id', 'role_id']); // Remove the foreign key
+            $table->dropColumn(['organization_id', 'user_id', 'role_id']); // Remove the column
         });
     }
 };
