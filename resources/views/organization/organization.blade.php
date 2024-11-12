@@ -12,7 +12,7 @@
     <div class="container">
         <div class="header">
             <h1>Organization List</h1>
-            <button class="add-button">Add Organization</button>
+            <button class="add-organization-button" onclick="openModal()">Add Organization</button>
         </div>
 
         <div class="table-container">
@@ -28,48 +28,34 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Tech Innovations Inc.</td>
-                    <td>John Doe</td>
-                    <td>150</td>
-                    <td><span class="created-at">March 10, 2023<br>9:15 AM</span></td>
-                    <td><span class="status-green">No ongoing vote</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Green Earth Corp.</td>
-                    <td>Emma Wilson</td>
-                    <td>85</td>
-                    <td><span class="created-at">January 25, 2023<br>2:30 PM</span></td>
-                    <td><span class="status-red">3 vote is required!</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Smart Solutions Ltd.</td>
-                    <td>Michael Smith</td>
-                    <td>230</td>
-                    <td><span class="created-at">December 5, 2022<br>11:00 AM</span></td>
-                    <td><span class="status-orange">3 ongoing vote</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Health Plus Inc.</td>
-                    <td>Sarah Connor</td>
-                    <td>120</td>
-                    <td><span class="created-at">February 12, 2023<br>1:45 PM</span></td>
-                    <td><span class="status-green">No ongoing vote</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Bright Future NGO</td>
-                    <td>James Lee</td>
-                    <td>45</td>
-                    <td><span class="created-at">May 18, 2022<br>10:00 AM</span></td>
-                    <td><span class="status-red">3 vote is required!</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
+                    @foreach ($organization_list as $organization)
+                        <tr>
+                            <td>{{ $organization['name'] }}</td>
+                            <td>{{ $organization['leader'] }}</td>
+                            <td>{{ $organization['member_count'] }}</td>
+                            <td><span class="created-at">{{ $organization['created_at'] }}</span></td>
+                            <td><span class="status-green">No ongoing vote</span></td>
+                            <td><button class="action-button" onclick="redirect('{{ $organization['id'] }}')">View Details</button></td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div id="modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Organization</h2>
+            <label for="org-name">Organization Name</label>
+            <input type="text" id="org-name" placeholder="Enter organization name" required>
+            
+            <label for="org-description">Description</label>
+            <textarea id="org-description" placeholder="Enter organization description" required></textarea>
+            
+            <div class="modal-buttons">
+                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="add-button" onclick="addOrganization()">Add</button>
+            </div>
         </div>
     </div>
 
@@ -77,25 +63,78 @@
 </body>
 </html>
 
+<script>
+    function redirect(id) {
+        window.location.href = `organization-detail/${id}`;
+    }
+    // Function to open the modal
+    function openModal() {
+        document.getElementById("modal").style.display = "flex";
+        document.getElementById("modal").style.opacity = "1";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById("org-name").value = '';
+        document.getElementById("org-description").value = '';
+    
+        document.getElementById("modal").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("modal").style.display = "none";
+        }, 300); // Match this duration with the fade-out animation duration
+    }
+
+    // Function to handle the AJAX request to add an organization
+    function addOrganization() {
+        const name = document.getElementById("org-name").value;
+        const description = document.getElementById("org-description").value;
+
+        fetch('/api/addOrganization', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+            },
+            body: JSON.stringify({ name: name, description: description })
+        })
+        .then(response => {
+            // Check if the response status is 200
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                // If not 200, throw an error with the message from the response
+                return response.json().then(errorData => {
+                    throw new Error(errorData.message || 'An error occurred');
+                });
+            }
+        })
+        .then(data => {
+            // If we reach here, the response was successful
+            alert('Organization added successfully!');
+            closeModal(); // Close modal after success
+            location.reload(); // Reload the page
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+            alert(`Failed to add organization: ${error.message}`);
+        });
+    }
+</script>
+
 <style>
     body {
         height: 100vh;
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        
         font-family: Arial, sans-serif;
         background-color: #fafafa;
     }
 
     .container {
-        /* background: linear-gradient(135deg, rgba(0, 105, 255, 0.8), rgba(0, 255, 255, 0.5)),
-                    radial-gradient(circle, rgba(0, 105, 255, 0.5) 0%, rgba(0, 255, 255, 0.2) 70%);
-        background-blend-mode: multiply; */
         padding: 10px;
         flex: 1;
-        
-        
     }
     
     .header {
@@ -111,27 +150,29 @@
         color: #333;
     }
 
-    .add-button {
-        margin-left: 10px;
-        padding: 10px 15px;
+    .add-organization-button {
+        padding: 10px 25px;
         font-size: 14px;
         color: white;
         background-color: #28a745;
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         cursor: pointer;
+    }
+
+    .add-organization-button:hover {
+        background-color: #22893a;
     }
 
     .table-container {
         overflow-x: auto;
-        border-color: #888888;
-        border-width: 5px;
+        border: 1px solid #ddd;
+        margin: 10px;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 5px;
     }
 
     th, td {
@@ -142,8 +183,7 @@
 
     th {
         font-weight: bold;
-        color: #555555;
-        border-bottom: 1px solid #d0d0d0;
+        color: #555;
         background-color: #fefefe;
     }
 
@@ -152,7 +192,7 @@
     }
 
     tr:hover {
-        background-color: rgb(248, 248, 248);
+        background-color: #f8f8f8;
     }
 
     .created-at {
@@ -161,12 +201,12 @@
     }
 
     .action-button {
-        padding: 8px 12px;
+        padding: 10px 25px;
         font-size: 14px;
         color: white;
         background-color: #007bff;
         border: none;
-        border-radius: 5px;
+        border-radius: 25px;
         cursor: pointer;
     }
 
@@ -188,6 +228,106 @@
         color: #fd7e14;
         font-weight: bold;
     }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .modal-content label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+
+    .modal-content input, .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        resize: none; /* Prevents resizing of the textarea */
+        height: 150px; /* Set the desired height */
+    }
+
+    .modal-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .cancel-button, .add-button {
+        padding: 10px 25px;
+        font-size: 14px;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .cancel-button {
+        background-color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .cancel-button:hover {
+        background-color: #c82333;
+    }
+
+    .add-button {
+        background-color: #28a745;
+    }
+
+    .add-button:hover {
+        background-color: #218838;
+    }
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
     @media only screen and (max-width: 768px) {
         .feature-container {

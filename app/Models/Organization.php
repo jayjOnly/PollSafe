@@ -32,4 +32,12 @@ class Organization extends Model
             }
         });
     }
+
+    public function members() {
+        return $this->hasMany(OrganizationMember::class);
+    }
+
+    public function leader() {
+        return $this->hasOne(OrganizationMember::class)->where('role_id', OrganizationRole::ROLE_LEADER);
+    }
 }

@@ -67,4 +67,8 @@ class User extends Authenticatable
             }
         });
     }
+
+    public function organization_members() {
+        return $this->hasMany(OrganizationMember::class);
+    }
 }

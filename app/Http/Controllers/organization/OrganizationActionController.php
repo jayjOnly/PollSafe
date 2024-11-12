@@ -20,9 +20,7 @@ class OrganizationActionController extends Controller
     // request: name + description
     public function addOrganization(AddOrganizationRequest $request) {
         if (isset($request->validator) && $request->validator->fails()) {
-            return back()->withErrors([
-                'error' => $request->validator->errors()->first(),
-            ])->withInput();
+            return response()->json(['message' => $request->validator->errors()->first()], 400);
         }
 
         $validated = $request->validated();
@@ -38,7 +36,7 @@ class OrganizationActionController extends Controller
             'role_id' => OrganizationRole::ROLE_LEADER,
         ]);
 
-        return redirect()->route('dashboard');
+        return response()->json(['message' => 'Success'], 200);
     }
     // request: name + description + organization id
     public function editOrganization(EditOrganizationRequest $request) {

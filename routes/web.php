@@ -7,7 +7,9 @@ use App\Http\Controllers\dashboard\DashboardController;
 use App\Http\Controllers\onboarding\HomeController;
 use App\Http\Controllers\onboarding\AboutUsController;
 use App\Http\Controllers\onboarding\FAQController;
+use App\Http\Controllers\organization\OrganizationActionController;
 use App\Http\Controllers\organization\OrganizationController;
+use App\Http\Controllers\organization\OrganizationDetailController;
 use App\Http\Controllers\voting\VotingPageController;
 use App\Http\Controllers\voting\HistoryController;
 use App\Http\Controllers\voting\VotingController;
@@ -39,4 +41,7 @@ Route::middleware(['auth', 'share_user'])->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::get('/organization', [OrganizationController::class, 'show'])->name('organization');
+    Route::get('/organization-detail/{organization_id}', [OrganizationDetailController::class, 'show'])->whereUuid('organization_id')->name('organization-detail');
+
+    Route::post('/api/addOrganization', [OrganizationActionController::class, 'addOrganization']);
 });
