@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class Organization extends Model
+class OrganizationMember extends Model
 {
     public $incrementing = false; // Disable auto-incrementing for the primary key
 
@@ -17,8 +17,9 @@ class Organization extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'description',
+        'organization_id',
+        'user_id',
+        'role'
     ];
 
     // Automatically generate a UUID for the id attribute

@@ -8,6 +8,8 @@ use App\Http\Controllers\onboarding\HomeController;
 use App\Http\Controllers\onboarding\AboutUsController;
 use App\Http\Controllers\onboarding\FAQController;
 use App\Http\Controllers\organization\OrganizationController;
+use App\Http\Controllers\organization\OrganizationActionController;
+use App\Http\Controllers\organization\OrganizationMemberActionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,4 +32,10 @@ Route::middleware(['auth', 'share_user'])->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::get('/organization', [OrganizationController::class, 'show'])->name('organization');
+    Route::get('/organization1', [OrganizationActionController::class, 'addOrganization'])->name('addorganization');
+    Route::get('/organization2', [OrganizationActionController::class, 'editOrganization'])->name('editorganization');
+    Route::get('/organization3', [OrganizationActionController::class, 'deleteOrganization'])->name('deleteorganization');
+    Route::get('/organization4', [OrganizationMemberActionController::class, 'addOrganizationMember'])->name('addorganizationmember');
+    Route::get('/organization5', [OrganizationMemberActionController::class, 'deleteOrganizationMember'])->name('deleteorganizationmember');
+    Route::get('/organization6', [OrganizationMemberActionController::class, 'changeOrganizationMemberRole'])->name('changeorganizationmemberrole');
 });
