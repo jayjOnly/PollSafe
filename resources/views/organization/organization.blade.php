@@ -35,7 +35,7 @@
                             <td>{{ $organization['member_count'] }}</td>
                             <td><span class="created-at">{{ $organization['created_at'] }}</span></td>
                             <td><span class="status-green">No ongoing vote</span></td>
-                            <td><button class="action-button" onclick="redirect('{{ $organization['id'] }}')">View Details</button></td>
+                            <td><button class="action-button" onclick="window.location.href = '{{ route('organization-detail', ['organization_id' => $organization['id']]) }}';">View Details</button></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -64,9 +64,6 @@
 </html>
 
 <script>
-    function redirect(id) {
-        window.location.href = `organization-detail/${id}`;
-    }
     // Function to open the modal
     function openModal() {
         document.getElementById("modal").style.display = "flex";
@@ -317,17 +314,17 @@
         background-color: #218838;
     }
 
-/* Animation */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
+    /* Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
     @media only screen and (max-width: 768px) {
         .feature-container {
