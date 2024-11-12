@@ -8,8 +8,9 @@ use App\Http\Controllers\onboarding\HomeController;
 use App\Http\Controllers\onboarding\AboutUsController;
 use App\Http\Controllers\onboarding\FAQController;
 use App\Http\Controllers\organization\OrganizationController;
-use App\Http\Controllers\organization\OrganizationActionController;
-use App\Http\Controllers\organization\OrganizationMemberActionController;
+use App\Http\Controllers\voting\VotingPageController;
+use App\Http\Controllers\voting\HistoryController;
+use App\Http\Controllers\voting\VotingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,6 +20,12 @@ Route::get('/', function () {
 Route::get('/home', [HomeController::class, 'show'])->name('home');
 Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
 Route::get('/faq', [FAQController::class, 'show'])->name('faq');
+Route::get('/votingPage', [VotingPageController::class, 'show'])->name('voting.show');
+Route::get('/votingPage', [VotingPageController::class, 'index'])->name('voting.index');
+Route::post('/votingPage', [VotingPageController::class, 'vote'])->name('voting.vote');
+Route::get('/active', [VotingController::class, 'show'])->name('active');
+Route::get('/history', [HistoryController::class, 'show'])->name('history');
+
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
@@ -32,10 +39,4 @@ Route::middleware(['auth', 'share_user'])->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::get('/organization', [OrganizationController::class, 'show'])->name('organization');
-    Route::get('/organization1', [OrganizationActionController::class, 'addOrganization'])->name('addorganization');
-    Route::get('/organization2', [OrganizationActionController::class, 'editOrganization'])->name('editorganization');
-    Route::get('/organization3', [OrganizationActionController::class, 'deleteOrganization'])->name('deleteorganization');
-    Route::get('/organization4', [OrganizationMemberActionController::class, 'addOrganizationMember'])->name('addorganizationmember');
-    Route::get('/organization5', [OrganizationMemberActionController::class, 'deleteOrganizationMember'])->name('deleteorganizationmember');
-    Route::get('/organization6', [OrganizationMemberActionController::class, 'changeOrganizationMemberRole'])->name('changeorganizationmemberrole');
 });
