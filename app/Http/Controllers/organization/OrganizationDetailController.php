@@ -14,7 +14,32 @@ use Illuminate\Support\Facades\Log;
 
 class OrganizationDetailController extends Controller
 {
-    public function show() {
-        return view('organization.organization-detail');
+    public function show($organization_id) {
+        $user_id = Auth::id();
+        $organization = Organization::whereHas('members', function ($query) use ($user_id, $organization_id) {
+            $query->where('user_id', $user_id)
+                  ->where('organization_id', $organization_id);
+        })
+        ->with(['members.user'])  // Load member user details
+        ->findOrFail($organization_id);
+
+        // Prepare data for response
+        $organization_detail = [
+            'id' => $organization->uuid,
+            'name' => $organization->name,
+            'description' => $organization->description,
+            'created_at' => $organization->created_at,
+            'members' => $organization->members->map(function ($member) {
+                return [
+                    'id' => $member->user->uuid,
+                    'name' => $member->user->name,
+                    'email' => $member->user->email,
+                    'role' => $member->role->role,
+                    'joined_at' => $member->created_at,
+                ];
+            }),
+        ];
+
+        return view('organization.organization-detail', compact('organization_detail'));
     }
 }

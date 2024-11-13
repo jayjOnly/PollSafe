@@ -43,4 +43,9 @@ class OrganizationMember extends Model
     {
         return $this->belongsTo(Organization::class);
     }
+
+    public function role()
+    {
+        return $this->belongsTo(OrganizationRole::class);
+    }
 }
