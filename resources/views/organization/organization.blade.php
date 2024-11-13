@@ -66,15 +66,14 @@
 <script>
     // Function to open the modal
     function openModal() {
+        document.getElementById("org-name").value = '';
+        document.getElementById("org-description").value = '';
         document.getElementById("modal").style.display = "flex";
         document.getElementById("modal").style.opacity = "1";
     }
 
     // Function to close the modal
     function closeModal() {
-        document.getElementById("org-name").value = '';
-        document.getElementById("org-description").value = '';
-    
         document.getElementById("modal").style.opacity = "0";
         setTimeout(() => {
             document.getElementById("modal").style.display = "none";
