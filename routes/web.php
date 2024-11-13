@@ -44,4 +44,6 @@ Route::middleware(['auth', 'share_user'])->group(function () {
     Route::get('/organization-detail/{organization_id}', [OrganizationDetailController::class, 'show'])->whereUuid('organization_id')->name('organization-detail');
 
     Route::post('/api/addOrganization', [OrganizationActionController::class, 'addOrganization']);
+    Route::put('/api/editOrganization', [OrganizationActionController::class, 'editOrganization']);
+    Route::delete('/api/deleteOrganization', [OrganizationActionController::class, 'deleteOrganization']);
 });

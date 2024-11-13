@@ -13,8 +13,8 @@
         <div class="header">
             <h1>{{ $organization_detail['name'] }} - Manajemen Anggota</h1>
             <div class="header-buttons">
-                <a href="#" class="btn btn-primary">Edit Organisasi</a>
-                <a href="#" class="btn btn-danger">Delete Organisasi</a>
+                <button class="btn btn-primary" onclick="openModal()">Edit Organisasi</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">Delete Organisasi</button>
             </div>
         </div>
 
@@ -81,8 +81,116 @@
             </table>
         </div>
     </div>
+
+    <div id="modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Organization</h2>
+            <label for="org-name">Organization Name</label>
+            <input type="text" id="org-name" placeholder="Enter organization name" required>
+            
+            <label for="org-description">Description</label>
+            <textarea id="org-description" placeholder="Enter organization description" required></textarea>
+            
+            <div class="modal-buttons">
+                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="add-button" onclick="editOrganization()">Update</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+
+<script>
+    // Function to open the edit modal
+    function openModal() {
+        document.getElementById("org-name").value = '{{ $organization_detail['name'] }}';
+        document.getElementById("org-description").value = '{{ $organization_detail['description'] }}';
+
+        document.getElementById("modal").style.display = "flex";
+        document.getElementById("modal").style.opacity = "1";
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById("modal").style.opacity = "0";
+        setTimeout(() => {
+            document.getElementById("modal").style.display = "none";
+        }, 300); // Match this duration with the fade-out animation duration
+    }
+
+    // Function to handle the AJAX request to add an organization
+    function editOrganization() {
+        const name = document.getElementById("org-name").value;
+        const description = document.getElementById("org-description").value;
+
+        fetch('/api/editOrganization', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+            },
+            body: JSON.stringify({ organization_id: '{{ $organization_detail['id'] }}', name: name, description: description })
+        })
+        .then(response => {
+            // Check if the response status is 200
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                // If not 200, throw an error with the message from the response
+                return response.json().then(errorData => {
+                    throw new Error(errorData.message || 'An error occurred');
+                });
+            }
+        })
+        .then(data => {
+            // If we reach here, the response was successful
+            alert('Organization updated successfully!');
+            closeModal(); // Close modal after success
+            location.reload(); // Reload the page
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+            alert(`Failed to update organization: ${error.message}`);
+        });
+    }
+
+    // Function to confirm deletion
+    function confirmDelete() {
+        const confirmation = confirm("Are you sure you want to delete this organization?");
+        if (confirmation) {
+            fetch('/api/deleteOrganization', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+                },
+                body: JSON.stringify({ organization_id: '{{ $organization_detail['id'] }}' })
+            })
+            .then(response => {
+                // Check if the response status is 200
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    // If not 200, throw an error with the message from the response
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'An error occurred');
+                    });
+                }
+            })
+            .then(data => {
+                // If we reach here, the response was successful
+                alert('Organization deleted successfully!');
+                window.location.href = '{{ route('organization') }}';
+            })
+            .catch(error => {
+                // Handle any errors that occurred during the fetch
+                console.error('Error:', error);
+                alert(`Failed to delete organization: ${error.message}`);
+            });
+        }
+    }
+</script>
 
 <style>
     * {
@@ -266,5 +374,105 @@
         color: #555;
         font-weight: 500;
         margin-bottom: 5px;
+    }
+
+    /* Modal Styles */
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        width: 90%;
+        max-width: 500px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content h2 {
+        margin-top: 0;
+        color: #333;
+    }
+
+    .modal-content label {
+        display: block;
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+
+    .modal-content input, .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        font-size: 14px;
+        resize: none; /* Prevents resizing of the textarea */
+        height: 150px; /* Set the desired height */
+    }
+
+    .modal-buttons {
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .cancel-button, .add-button {
+        padding: 10px 25px;
+        font-size: 14px;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .cancel-button {
+        background-color: #dc3545;
+        margin-right: 10px;
+    }
+
+    .cancel-button:hover {
+        background-color: #c82333;
+    }
+
+    .add-button {
+        background-color: #28a745;
+    }
+
+    .add-button:hover {
+        background-color: #218838;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 </style>

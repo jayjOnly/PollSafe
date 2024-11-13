@@ -25,7 +25,7 @@ class OrganizationDetailController extends Controller
 
         // Prepare data for response
         $organization_detail = [
-            'id' => $organization->uuid,
+            'id' => $organization->id,
             'name' => $organization->name,
             'description' => $organization->description,
             'created_at' => $organization->created_at,

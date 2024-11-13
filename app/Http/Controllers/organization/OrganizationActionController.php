@@ -41,9 +41,7 @@ class OrganizationActionController extends Controller
     // request: name + description + organization id
     public function editOrganization(EditOrganizationRequest $request) {
         if (isset($request->validator) && $request->validator->fails()) {
-            return back()->withErrors([
-                'error' => $request->validator->errors()->first(),
-            ])->withInput();
+            return response()->json(['message' => $request->validator->errors()->first()], 400);
         }
 
         $validated = $request->validated();
@@ -53,9 +51,9 @@ class OrganizationActionController extends Controller
         $role = OrganizationMember::where('organization_id', $validated['organization_id'])
             ->where('user_id', Auth::id())
             ->first()
-            ->role;
+            ->role_id;
 
-        if ($role !== 1) {
+        if ($role !== OrganizationRole::ROLE_LEADER) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
@@ -64,19 +62,12 @@ class OrganizationActionController extends Controller
             'description' => $validated['description'],
         ]);
 
-        return redirect()->route('dashboard');
+        return response()->json(['message' => 'Success'], 200);
     }
 
     public function deleteOrganization(DeleteOrganizationRequest $request) {
-        // $userId = Auth::user()->id
-        // $organizationId = organization id
-
-        // $organization = OrganizationMember::where(organization_id, $organizationId)->and(user_id, $userId)->and(role_id, Leader);
-
         if (isset($request->validator) && $request->validator->fails()) {
-            return back()->withErrors([
-                'error' => $request->validator->errors()->first(),
-            ])->withInput();
+            return response()->json(['message' => $request->validator->errors()->first()], 400);
         }
 
         $validated = $request->validated();
@@ -86,13 +77,14 @@ class OrganizationActionController extends Controller
         $role = OrganizationMember::where('organization_id', $validated['organization_id'])
             ->where('user_id', Auth::id())
             ->first()
-            ->role;
+            ->role_id;
 
         if ($role !== 1) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
         
         $organization->where('id', $organization->id)->delete();
-        return redirect()->route('dashboard');
+
+        return response()->json(['message' => 'Success'], 200);
     }
 }

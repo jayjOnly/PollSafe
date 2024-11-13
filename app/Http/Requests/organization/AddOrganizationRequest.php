@@ -17,7 +17,7 @@ class AddOrganizationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:App\Models\Organization,name'],
+            'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
         ];
     }

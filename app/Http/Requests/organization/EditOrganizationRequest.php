@@ -18,7 +18,7 @@ class EditOrganizationRequest extends FormRequest
     {
         return [
             'organization_id' => ['required', 'string'],
-            'name' => ['required', 'string', 'max:255', 'unique:App\Models\Organization,name'],
+            'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
         ];
     }
