@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 
-class OrganizationMember extends Model
+class OrganizationVote extends Model
 {
     public $incrementing = false; // Disable auto-incrementing for the primary key
 
@@ -18,8 +18,10 @@ class OrganizationMember extends Model
      */
     protected $fillable = [
         'organization_id',
-        'user_id',
-        'role_id'
+        'name',
+        'description',
+        'start_date',
+        'end_date',
     ];
 
     // Automatically generate a UUID for the id attribute
@@ -34,22 +36,7 @@ class OrganizationMember extends Model
         });
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function organization()
-    {
-        return $this->belongsTo(Organization::class);
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(OrganizationRole::class);
-    }
-
-    public function vote_member() {
+    public function vote_members() {
         return $this->hasMany(OrganizationVoteMember::class);
     }
 }

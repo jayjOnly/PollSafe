@@ -124,12 +124,12 @@
         <div class="nav-container">
             <ul class="nav-menu">
                 <li>
-                    <a href="{{ route('active') }}">
+                    <a href="{{ route('voting-active', ['organization_id' => $organization_id]) }}">
                         Semua Voting Aktif
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('history') }}" class="active">
+                    <a href="{{ route('voting-history', ['organization_id' => $organization_id]) }}" class="active">
                         History Voting
                     </a>
                 </li>
@@ -143,26 +143,21 @@
                 <h2>History Voting</h2>
             </div>
             <div class="card-body">
-                {{-- @if($historyVotes->count() > 0)
-                    @foreach($historyVotes as $vote) --}}
-                        <div class="vote-item">
-                            <div class="vote-info">
-                                <div class="vote-title">Vote Title</div>
-                                <div>
-                                    <p>Total Suara: 1</p>
-                                    <p>Berakhir pada: 01-11-2099</p>
-                                    <p>Pemenang: Trump</p>
-                                </div>
-                            </div>
+                @foreach ($organization_vote_list as $vote)
+                    <div class="vote-item">
+                        <div class="vote-info">
+                            <div class="vote-title">{{ $vote['name'] }}</div>
                             <div>
-                                <span class="vote-status">Selesai</span>
+                                <p>Total Suara: {{ $vote['vote_member_count'] }}</p>
+                                <p>Berakhir Pada: {{ $vote['end_date'] }}</p>
+                                <p>Pemenang: {{ $vote['winner'] }}</p>
                             </div>
                         </div>
-                    {{-- @endforeach
-                @else
-                    <p>Belum ada history voting.</p>
-                @endif --}}
-            </div>
+                        <div>
+                            <span class="vote-status">Selesai</span>
+                        </div>
+                    </div>
+                @endforeach
         </div>
     </div>
 </body>

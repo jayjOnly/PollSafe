@@ -6,12 +6,9 @@
     <title>Voting Page</title>
 </head>
 <body>
-    
-    <x-nav-bar-guest></x-nav-bar-guest> <!--!!change to nav-bar-auth!!-->
-
     <div container = "container">
 
-        <h1 class="voting-name">VOTING PRESIDEN ZIMBABWE</h1> <!--ganti jadi variabel biar bisa disesuain sm organisasi / nama voting!-->
+        <h1 class="voting-name">VOTING {{ $vote->name }}</h1> <!--ganti jadi variabel biar bisa disesuain sm organisasi / nama voting!-->
 
         <div class="card-container">
 
@@ -28,7 +25,6 @@
                 <button class="vote-button" id="vote-btn">Vote</button>
             </div>
         </div>
-
     </div>
 
      <div id="confirmPopup" class="popup-overlay">
@@ -77,9 +73,35 @@
             if (selectedCandidate) {
                 const candidateId = selectedCandidate.getAttribute('data-candidate-id');
                     // Here you would typically send the vote to your backend
-                    console.log(candidateId);
-                    // send info to backend
-                    // vredirect back to organization page
+                    fetch('/api/setVote', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+                        },
+                        body: JSON.stringify({ organization_vote_id: '{{ $vote['id'] }}', candidate_id: candidateId })
+                    })
+                    .then(response => {
+                        // Check if the response status is 200
+                        if (response.status === 200) {
+                            return response.json();
+                        } else {
+                            // If not 200, throw an error with the message from the response
+                            return response.json().then(errorData => {
+                                throw new Error(errorData.message || 'An error occurred');
+                            });
+                        }
+                    })
+                    .then(data => {
+                        // If we reach here, the response was successful
+                        alert('Successfully vote!');
+                        window.location.href = '{{ route('voting-active', ['organization_id' => $vote['organization_id']]) }}' // Reload the page
+                    })
+                    .catch(error => {
+                        // Handle any errors that occurred during the fetch
+                        console.error('Error:', error);
+                        alert(`Failed to vote: ${error.message}`);
+                    });
             }
         });
     

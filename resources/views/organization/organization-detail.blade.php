@@ -43,10 +43,10 @@
             <h2>Action Organisasi:</h2>
             <div class="action-buttons">
                 @if($is_leader)
-                    <a href="#" class="btn btn-action">Create Vote</a>
+                    <a href="#" onclick="window.location.href = '{{ route('voting-create', ['organization_id' => $organization_detail['id']]) }}';" class="btn btn-action">Create Vote</a>
                     <a href="#" onclick="openModal('add-member')" class="btn btn-primary">Add Member</a>
                 @endif
-                <a href="#" class="btn btn-primary">Vote Now</a>
+                <a href="#" onclick="window.location.href = '{{ route('voting-active', ['organization_id' => $organization_detail['id']]) }}';" class="btn btn-primary">Vote Now</a>
             </div>
         </div>
 

@@ -38,9 +38,7 @@ class OrganizationMemberActionController extends Controller
             ->first()
             ->id;
 
-        $exist = OrganizationMember::where('user_id', $target_id)->first();
-
-        if ($exist) {
+        if (OrganizationMember::where('user_id', $target_id)->exists()) {
             return response()->json(['message' => 'Already became a member!'], 429);
         }
 

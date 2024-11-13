@@ -10,12 +10,12 @@
         <div class="nav-container">
             <ul class="nav-menu">
                 <li>
-                    <a href="{{ route('active') }}" class="active">
+                    <a href="{{ route('voting-active', ['organization_id' => $organization_id]) }}" class="active">
                         Semua Voting Aktif
                     </a>
                 </li>
                 <li>
-                    <a href="{{ route('history') }}">
+                    <a href="{{ route('voting-history', ['organization_id' => $organization_id]) }}">
                         History Voting
                     </a>
                 </li>
@@ -29,18 +29,20 @@
                 <h2>Voting Aktif</h2>
             </div>
             <div class="card-body">
-                <div class="vote-item">
-                    <div class="vote-info">
-                        <div class="vote-title">Pilih Ketua RT</div>
+                @foreach ($organization_vote_list as $vote)
+                    <div class="vote-item" onclick="window.location.href = '{{ route('voting', ['organization_vote_id' => $vote['id']]) }}'">
+                        <div class="vote-info">
+                            <div class="vote-title">{{ $vote['name'] }}</div>
+                            <div>
+                                <p>Total Suara: {{ $vote['vote_member_count'] }}</p>
+                                <p>Berakhir Pada: {{ $vote['end_date'] }}</p>
+                            </div>
+                        </div>
                         <div>
-                            <p>Total Suara: 1</p>
-                            <p>Berakhir Pada: 01-11-2099</p>
+                            <span class="vote-status">Aktif</span>
                         </div>
                     </div>
-                    <div>
-                        <span class="vote-status">Aktif</span>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>
