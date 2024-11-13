@@ -18,7 +18,7 @@ class DeleteOrganizationMemberRequest extends FormRequest
     {
         return [
             'organization_id' => ['required', 'string'],
-            'user_id' => ['required', 'string'],
+            'member_id' => ['required', 'string'],
         ];
     }
 

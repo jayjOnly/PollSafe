@@ -10,6 +10,7 @@ use App\Http\Controllers\onboarding\FAQController;
 use App\Http\Controllers\organization\OrganizationActionController;
 use App\Http\Controllers\organization\OrganizationController;
 use App\Http\Controllers\organization\OrganizationDetailController;
+use App\Http\Controllers\organization\OrganizationMemberActionController;
 use App\Http\Controllers\voting\VotingPageController;
 use App\Http\Controllers\voting\HistoryController;
 use App\Http\Controllers\voting\VotingController;
@@ -46,4 +47,7 @@ Route::middleware(['auth', 'share_user'])->group(function () {
     Route::post('/api/addOrganization', [OrganizationActionController::class, 'addOrganization']);
     Route::put('/api/editOrganization', [OrganizationActionController::class, 'editOrganization']);
     Route::delete('/api/deleteOrganization', [OrganizationActionController::class, 'deleteOrganization']);
+
+    Route::post('/api/addOrganizationMember', [OrganizationMemberActionController::class, 'addOrganizationMember']);
+    Route::delete('/api/deleteOrganizationMember', [OrganizationMemberActionController::class, 'deleteOrganizationMember']);
 });

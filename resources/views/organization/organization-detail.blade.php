@@ -12,10 +12,12 @@
     <div class="container">
         <div class="header">
             <h1>{{ $organization_detail['name'] }} - Manajemen Anggota</h1>
-            <div class="header-buttons">
-                <button class="btn btn-primary" onclick="openModal()">Edit Organisasi</button>
-                <button class="btn btn-danger" onclick="confirmDelete()">Delete Organisasi</button>
-            </div>
+            @if($is_leader)
+                <div class="header-buttons">
+                    <button class="btn btn-primary" onclick="openModal('edit-organization')">Edit Organisasi</button>
+                    <button class="btn btn-danger" onclick="deleteOrganization()">Delete Organisasi</button>
+                </div>
+            @endif
         </div>
 
         <div class="organization-info">
@@ -40,8 +42,10 @@
         <div class="action-section">
             <h2>Action Organisasi:</h2>
             <div class="action-buttons">
-                <a href="#" class="btn btn-action">Create Vote</a>
-                <a href="#" class="btn btn-primary">Add Member</a>
+                @if($is_leader)
+                    <a href="#" class="btn btn-action">Create Vote</a>
+                    <a href="#" onclick="openModal('add-member')" class="btn btn-primary">Add Member</a>
+                @endif
                 <a href="#" class="btn btn-primary">Vote Now</a>
             </div>
         </div>
@@ -66,15 +70,19 @@
                                 <span class="role-badge role-admin">{{ $member['role'] }}</span>
                             </td>
                             <td class="member-since">{{ $member['joined_at'] }}</td>
-                            <td class="member-actions">
-                                <select class="role-select">
-                                    <option selected>Member</option>
-                                    <option>Admin</option>
-                                </select>
-                                <button class="btn btn-danger btn-remove-user">
-                                    <i class="fas fa-user-times"></i>
-                                </button>
-                            </td>
+                            @if($is_leader)
+                                <td class="member-actions">
+                                    <select class="role-select">
+                                        <option selected>Member</option>
+                                        <option>Admin</option>
+                                    </select>
+                                    @if ($member['is_leader'] === false)
+                                        <button onclick="deleteMember('{{ $member['id'] }}', '{{ $member['name'] }}')" class="btn btn-danger btn-remove-user">
+                                            <i class="fas fa-user-times"></i>
+                                        </button>
+                                    @endif
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>
@@ -82,7 +90,7 @@
         </div>
     </div>
 
-    <div id="modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+    <div id="modal-edit-organization" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <div class="modal-content">
             <h2 id="modal-title">Add Organization</h2>
             <label for="org-name">Organization Name</label>
@@ -92,8 +100,21 @@
             <textarea id="org-description" placeholder="Enter organization description" required></textarea>
             
             <div class="modal-buttons">
-                <button class="cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="cancel-button" onclick="closeModal('edit-organization')">Cancel</button>
                 <button class="add-button" onclick="editOrganization()">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-add-member" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="modal-content">
+            <h2 id="modal-title">Add Organization Member</h2>
+            <label for="member-email">Member Email</label>
+            <input type="email" id="member-email" placeholder="Enter Member Email" required>
+            
+            <div class="modal-buttons">
+                <button class="cancel-button" onclick="closeModal('add-member')">Cancel</button>
+                <button class="add-button" onclick="addMember()">Add</button>
             </div>
         </div>
     </div>
@@ -102,20 +123,34 @@
 
 <script>
     // Function to open the edit modal
-    function openModal() {
-        document.getElementById("org-name").value = '{{ $organization_detail['name'] }}';
-        document.getElementById("org-description").value = '{{ $organization_detail['description'] }}';
+    function openModal(type) {
+        if (type === 'edit-organization') {
+            document.getElementById("org-name").value = '{{ $organization_detail['name'] }}';
+            document.getElementById("org-description").value = '{{ $organization_detail['description'] }}';
 
-        document.getElementById("modal").style.display = "flex";
-        document.getElementById("modal").style.opacity = "1";
+            document.getElementById("modal-edit-organization").style.display = "flex";
+            document.getElementById("modal-edit-organization").style.opacity = "1";
+        } else if (type === 'add-member') {
+            document.getElementById("member-email").value = '';
+
+            document.getElementById("modal-add-member").style.display = "flex";
+            document.getElementById("modal-add-member").style.opacity = "1";
+        }
     }
 
     // Function to close the modal
-    function closeModal() {
-        document.getElementById("modal").style.opacity = "0";
-        setTimeout(() => {
-            document.getElementById("modal").style.display = "none";
-        }, 300); // Match this duration with the fade-out animation duration
+    function closeModal(type) {
+        if (type === 'edit-organization') {
+            document.getElementById("modal-edit-organization").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("modal-edit-organization").style.display = "none";
+            }, 300); // Match this duration with the fade-out animation duration
+        } else if (type === 'add-member') {
+            document.getElementById("modal-add-member").style.opacity = "0";
+            setTimeout(() => {
+                document.getElementById("modal-add-member").style.display = "none";
+            }, 300); // Match this duration with the fade-out animation duration
+        }
     }
 
     // Function to handle the AJAX request to add an organization
@@ -156,7 +191,7 @@
     }
 
     // Function to confirm deletion
-    function confirmDelete() {
+    function deleteOrganization() {
         const confirmation = confirm("Are you sure you want to delete this organization?");
         if (confirmation) {
             fetch('/api/deleteOrganization', {
@@ -187,6 +222,76 @@
                 // Handle any errors that occurred during the fetch
                 console.error('Error:', error);
                 alert(`Failed to delete organization: ${error.message}`);
+            });
+        }
+    }
+
+    function addMember() {
+        const member_email = document.getElementById("member-email").value;
+
+        fetch('/api/addOrganizationMember', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+            },
+            body: JSON.stringify({ organization_id: '{{ $organization_detail['id'] }}', email: member_email })
+        })
+        .then(response => {
+            // Check if the response status is 200
+            if (response.status === 200) {
+                return response.json();
+            } else {
+                // If not 200, throw an error with the message from the response
+                return response.json().then(errorData => {
+                    throw new Error(errorData.message || 'An error occurred');
+                });
+            }
+        })
+        .then(data => {
+            // If we reach here, the response was successful
+            alert('Member added successfully!');
+            closeModal(); // Close modal after success
+            location.reload(); // Reload the page
+        })
+        .catch(error => {
+            // Handle any errors that occurred during the fetch
+            console.error('Error:', error);
+            alert(`Failed to add member: ${error.message}`);
+        });
+    }
+
+    function deleteMember(id, name) {
+        const confirmation = confirm(`Are you sure you want to delete member '${name}' from this organization?`);
+        if (confirmation) {
+            fetch('/api/deleteOrganizationMember', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+                },
+                body: JSON.stringify({ organization_id: '{{ $organization_detail['id'] }}', member_id: id })
+            })
+            .then(response => {
+                // Check if the response status is 200
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    // If not 200, throw an error with the message from the response
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'An error occurred');
+                    });
+                }
+            })
+            .then(data => {
+                // If we reach here, the response was successful
+                alert('Member deleted successfully!');
+                location.reload(); // Reload the page
+            })
+            .catch(error => {
+                // Handle any errors that occurred during the fetch
+                console.error('Error:', error);
+                alert(`Failed to member: ${error.message}`);
             });
         }
     }
