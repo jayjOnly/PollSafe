@@ -6,7 +6,6 @@
     <title>Voting Aktif</title>
 </head>
 <body>
-    <x-nav-bar-auth></x-nav-bar-auth>
     <nav>
         <div class="nav-container">
             <ul class="nav-menu">

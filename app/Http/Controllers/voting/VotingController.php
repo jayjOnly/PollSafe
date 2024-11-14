@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\OrganizationVote;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class VotingController extends Controller
 {
@@ -16,7 +15,6 @@ class VotingController extends Controller
             ->withCount('vote_members')  // Counts votes_member records for each vote
             ->get();
 
-        Log::info(Carbon::now()->toIso8601String());
         // Prepare the response
         $organization_vote_list = $votes->map(function ($vote) {
             return [

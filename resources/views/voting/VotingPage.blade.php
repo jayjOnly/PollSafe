@@ -7,6 +7,7 @@
 </head>
 <body>
     <div container = "container">
+
         <h1 class="voting-name">VOTING {{ $vote->name }}</h1> <!--ganti jadi variabel biar bisa disesuain sm organisasi / nama voting!-->
 
         <div class="card-container">

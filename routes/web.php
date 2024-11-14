@@ -36,8 +36,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'share_user'])->group(function () {
     Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard', [OrganizationController::class, 'show'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard');
     Route::get('/organization', [OrganizationController::class, 'show'])->name('organization');
     Route::get('/organization-detail/{organization_id}', [OrganizationDetailController::class, 'show'])->whereUuid('organization_id')->name('organization-detail');
 

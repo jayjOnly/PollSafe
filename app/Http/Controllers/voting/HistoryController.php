@@ -8,8 +8,8 @@ use App\Models\OrganizationVote;
 use App\Models\OrganizationVoteCandidate;
 use App\Models\OrganizationVoteMember;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class HistoryController extends Controller
 {
