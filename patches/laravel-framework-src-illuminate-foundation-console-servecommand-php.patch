@@ -1,6 +1,14 @@
 --- /dev/null
 +++ ../src/Illuminate/Foundation/Console/ServeCommand.php
-@@ -365,7 +365,11 @@
+@@ -11,6 +11,7 @@
+ use Symfony\Component\Process\Process;
+ 
+ use function Illuminate\Support\php_binary;
++use function PHPUnit\Framework\matches;
+ use function Termwind\terminal;
+ 
+ #[AsCommand(name: 'serve')]
+@@ -365,7 +366,11 @@
  
          preg_match($regex, $line, $matches);
  

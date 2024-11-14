@@ -1,73 +1,64 @@
 <?php
 
+use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\LogoutController;
+use App\Http\Controllers\auth\RegisterController;
+use App\Http\Controllers\dashboard\DashboardController;
+use App\Http\Controllers\onboarding\HomeController;
+use App\Http\Controllers\onboarding\AboutUsController;
+use App\Http\Controllers\onboarding\FAQController;
+use App\Http\Controllers\organization\OrganizationActionController;
+use App\Http\Controllers\organization\OrganizationController;
+use App\Http\Controllers\organization\OrganizationDetailController;
+use App\Http\Controllers\organization\OrganizationMemberActionController;
+use App\Http\Controllers\voting\CreateController;
+use App\Http\Controllers\voting\VotingPageController;
+use App\Http\Controllers\voting\HistoryController;
+use App\Http\Controllers\voting\VoteActionController;
+use App\Http\Controllers\voting\VotingController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\OrganizationsController;
-use App\Http\Controllers\OrganizationMemberController;
-
-Route::fallback(function () {
-    return redirect('/');
-});
 
 Route::get('/', function () {
-    return view('home');
+    return redirect()->route('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/organizations/create', [OrganizationsController::class, 'create'])
-        ->name('organizations.create');
-    Route::post('/organizations', [OrganizationsController::class, 'store'])
-        ->name('organizations.store');
-    Route::get('/organizations/{organization:uuid}', [OrganizationsController::class, 'show'])
-        ->name('organizations.show');
-    Route::get('/organizations/{organization:uuid}/edit', [OrganizationsController::class, 'edit'])
-        ->name('organizations.edit');
-    Route::get('/organizations/{organization:uuid}/manage', [OrganizationsController::class, 'manage'])
-        ->name('organizations.manage');
-    Route::get('/organizations', [OrganizationsController::class, 'index'])
-        ->name('organizations.index');
-    Route::put('/organizations/{organization:uuid}', [OrganizationsController::class, 'update'])
-        ->name('organizations.update');
-    Route::get('/organizations/{organization}/members', [OrganizationMemberController::class, 'index'])
-        ->name('organizations.members.index');
-    Route::post('/organizations/{organization}/members/invite', [OrganizationMemberController::class, 'invite'])
-        ->name('organizations.members.invite');
-    Route::put('/organizations/{organization}/members/{member}/role', [OrganizationMemberController::class, 'updateRole'])
-        ->name('organizations.members.updateRole');
-    Route::delete('/organizations/{organization}/members/{member}', [OrganizationMemberController::class, 'remove'])
-        ->name('organizations.members.remove');
-    Route::get('/organizations/{organization:uuid}/add-candidate', [OrganizationsController::class, 'addCandidate'])
-        ->name('organizations.add_candidate');
-    Route::post('/organizations/{organization:uuid}/candidates', [OrganizationsController::class, 'storeCandidate'])
-        ->name('organizations.store_candidate');
-});
-
-Route::get('/about-us', function () {
-    return view('aboutus');
-});
-
-Route::get('/faq', function () {
-    return view('faq');
-});
-
-Route::get('/test-page', function () {
-    return view('test-page');
-});
+Route::get('/home', [HomeController::class, 'show'])->name('home');
+Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
+Route::get('/faq', [FAQController::class, 'show'])->name('faq');
 
 Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::get('/register', [RegisterController::class, 'show'])->name('register');
 
-    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1'); // Batasi 5 request per menit
-    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
-    Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1'); // Batasi 5 request per menit
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/register', [RegisterController::class, 'register']);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'share_user'])->group(function () {
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-});
+    Route::get('/dashboard', [OrganizationController::class, 'show'])->name('dashboard');
+    Route::get('/organization', [OrganizationController::class, 'show'])->name('organization');
+    Route::get('/organization-detail/{organization_id}', [OrganizationDetailController::class, 'show'])->whereUuid('organization_id')->name('organization-detail');
 
+    Route::get('/organization-voting-create/{organization_id}', [CreateController::class, 'show'])->whereUuid('organization_id')->name('voting-create');
+    Route::get('/organization-voting-active/{organization_id}', [VotingController::class, 'show'])->whereUuid('organization_id')->name('voting-active');
+    Route::get('/organization-voting-history/{organization_id}', [HistoryController::class, 'show'])->whereUuid('organization_id')->name('voting-history');
+    Route::get('/organization-voting/{organization_vote_id}', [VotingPageController::class, 'show'])->whereUuid('organization_vote_id')->name('voting');
+
+    // Route::get('/votingPage', [VotingPageController::class, 'show'])->name('voting.show');
+    // Route::get('/votingPage', [VotingPageController::class, 'index'])->name('voting.index');
+    // Route::post('/votingPage', [VotingPageController::class, 'vote'])->name('voting.vote');
+    // Route::get('/active', [VotingController::class, 'show'])->name('active');
+    // Route::get('/history', [HistoryController::cwwwlass, 'show'])->name('history');
+
+    Route::post('/api/addOrganization', [OrganizationActionController::class, 'addOrganization']);
+    Route::put('/api/editOrganization', [OrganizationActionController::class, 'editOrganization']);
+    Route::delete('/api/deleteOrganization', [OrganizationActionController::class, 'deleteOrganization']);
+
+    Route::post('/api/addOrganizationMember', [OrganizationMemberActionController::class, 'addOrganizationMember']);
+    Route::delete('/api/deleteOrganizationMember', [OrganizationMemberActionController::class, 'deleteOrganizationMember']);
+
+    Route::post('/api/addVote', [VoteActionController::class, 'addVote']);
+    Route::post('/api/setVote', [VoteActionController::class, 'setVote']);
+});
