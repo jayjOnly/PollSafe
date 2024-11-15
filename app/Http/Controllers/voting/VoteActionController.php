@@ -80,9 +80,7 @@ class VoteActionController extends Controller
         }
 
         $currentTime = Carbon::now();
-        Log::debug($currentTime);
-        Log::debug($organization_vote->start_date);
-        Log::debug($organization_vote->end_date);
+
         if ($currentTime->lt($organization_vote->start_date)) {
             return response()->json(['message' => 'Voting has not started yet!'], 403);
         }
