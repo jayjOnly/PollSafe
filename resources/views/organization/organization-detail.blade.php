@@ -72,10 +72,6 @@
                             <td class="member-since">{{ $member['joined_at'] }}</td>
                             @if($is_leader)
                                 <td class="member-actions">
-                                    <select class="role-select">
-                                        <option selected>Member</option>
-                                        <option>Admin</option>
-                                    </select>
                                     @if ($member['is_leader'] === false)
                                         <button onclick="deleteMember('{{ $member['id'] }}', '{{ $member['name'] }}')" class="btn btn-danger btn-remove-user">
                                             <i class="fas fa-user-times"></i>
@@ -449,7 +445,6 @@
     }
 
     .member-actions {
-        display: flex;
         gap: 10px;
         align-items: center;
     }
