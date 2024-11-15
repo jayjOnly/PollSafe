@@ -30,8 +30,8 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [LoginController::class, 'show'])->name('login');
     Route::get('/register', [RegisterController::class, 'show'])->name('register');
 
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/register', [RegisterController::class, 'register']);
+    Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:5,2');
+    Route::post('/register', [RegisterController::class, 'register'])->middleware('throttle:5,2');
 });
 
 Route::middleware(['auth', 'share_user'])->group(function () {
