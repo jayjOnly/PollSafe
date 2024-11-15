@@ -13,7 +13,7 @@
         @error('error')
             <div class="message error" id="message">{{ $message }}</div>
         @enderror
-        <form id="registerForm" method="POST" action="{{ route('register') }}">
+        <form id="registerForm" method="POST" action="{{ route('register') }}" autocomplete="off">
             @csrf
             <div class="input-group">
                 <input type="text" name="name" id="name" value="{{ old('name') }}" required onfocus="checkInput(this)" onblur="checkInput(this)">
