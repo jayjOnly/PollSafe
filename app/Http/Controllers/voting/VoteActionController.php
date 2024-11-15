@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\UnauthorizedException;
+use Carbon\Carbon;
 
 class VoteActionController extends Controller
 {
@@ -76,6 +77,16 @@ class VoteActionController extends Controller
 
         if (OrganizationVoteMember::where('organization_member_id', $organization_member->id)->where('organization_vote_id', $validated['organization_vote_id'])->exists()) {
             return response()->json(['message' => 'Already voted!'], 429);
+        }
+
+        $currentTime = Carbon::now();
+
+        if ($currentTime->lt($organization_vote->start_date)) {
+            return response()->json(['message' => 'Voting has not started yet!'], 403);
+        }
+    
+        if ($currentTime->gt($organization_vote->end_date)) {
+            return response()->json(['message' => 'Voting period has ended!'], 403);
         }
 
         OrganizationVoteMember::create([
