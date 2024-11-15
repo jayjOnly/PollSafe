@@ -15,7 +15,7 @@
             <div class="candidate-container">
                 @foreach ($candidates as $candidate)
                 <div class="candidate-card" data-candidate-id={{ $candidate['id'] }}>
-                    <img class="profile-pic" src="{{ $candidate['image']}}" alt="{{ $candidate['name'] }}">
+                    <img class="profile-pic" src="{{ asset('JV.png') }}" alt="{{ $candidate['name'] }}">
                     <h3 class="candidate-name">{{ $candidate['name'] }}</h3>
                 </div>
                 @endforeach

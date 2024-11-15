@@ -38,7 +38,7 @@ class OrganizationMemberActionController extends Controller
             ->first()
             ->id;
 
-        if (OrganizationMember::where('user_id', $target_id)->exists()) {
+        if (OrganizationMember::where('user_id', $target_id)->where('organization_id', $validated['organization_id'])->exists()) {
             return response()->json(['message' => 'Already became a member!'], 429);
         }
 
