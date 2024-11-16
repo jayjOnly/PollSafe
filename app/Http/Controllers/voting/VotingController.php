@@ -17,7 +17,7 @@ class VotingController extends Controller
             ->exists();
         
         if(!$isMember){
-            abort(403, 'Not authorized');
+            abort(403, 'Forbidden');
         }
 
         $votes = OrganizationVote::where('organization_id', $organization_id)
