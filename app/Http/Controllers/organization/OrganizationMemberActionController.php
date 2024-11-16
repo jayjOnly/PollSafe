@@ -34,17 +34,19 @@ class OrganizationMemberActionController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $target_id = User::where('email', $validated['email'])
-            ->first()
-            ->id;
+        $target = User::where('email', $validated['email'])->first();
 
-        if (OrganizationMember::where('user_id', $target_id)->where('organization_id', $validated['organization_id'])->exists()) {
+        if ($target === null) {
+            return response()->json(['message' => 'This member doesn\'t exist'], 404);
+        }
+
+        if (OrganizationMember::where('user_id', $target->id)->where('organization_id', $validated['organization_id'])->exists()) {
             return response()->json(['message' => 'Already became a member!'], 429);
         }
 
         OrganizationMember::create([
             'organization_id' => $organization->id,
-            'user_id' => $target_id,
+            'user_id' => $target->id,
             'role_id' => OrganizationRole::ROLE_MEMBER,
         ]);
 
