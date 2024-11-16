@@ -21,5 +21,4 @@ class OrganizationVoteMember extends Model
     {
         return $this->belongsTo(OrganizationMember::class);
     }
-
 }
