@@ -23,7 +23,7 @@
                     <th>Organization Leader</th>
                     <th>Member Count</th>
                     <th>Created At</th>
-                    <th>Vote Status</th>
+                    {{-- <th>Vote Status</th> --}}
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -34,7 +34,7 @@
                             <td>{{ $organization['leader'] }}</td>
                             <td>{{ $organization['member_count'] }}</td>
                             <td><span class="created-at">{{ $organization['created_at'] }}</span></td>
-                            <td><span class="status-green">No ongoing vote</span></td>
+                            {{-- <td><span class="status-green">No ongoing vote</span></td> --}}
                             <td><button class="action-button" onclick="window.location.href = '{{ route('organization-detail', ['organization_id' => $organization['id']]) }}';">View Details</button></td>
                         </tr>
                     @endforeach
@@ -89,7 +89,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Adjust this if you're using a different CSRF token setup
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' 
             },
             body: JSON.stringify({ name: name, description: description })
         })

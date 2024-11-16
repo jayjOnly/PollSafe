@@ -45,12 +45,6 @@ Route::middleware(['auth', 'share_user'])->group(function () {
     Route::get('/organization-voting-history/{organization_id}', [HistoryController::class, 'show'])->whereUuid('organization_id')->name('voting-history');
     Route::get('/organization-voting/{organization_vote_id}', [VotingPageController::class, 'show'])->whereUuid('organization_vote_id')->name('voting');
 
-    // Route::get('/votingPage', [VotingPageController::class, 'show'])->name('voting.show');
-    // Route::get('/votingPage', [VotingPageController::class, 'index'])->name('voting.index');
-    // Route::post('/votingPage', [VotingPageController::class, 'vote'])->name('voting.vote');
-    // Route::get('/active', [VotingController::class, 'show'])->name('active');
-    // Route::get('/history', [HistoryController::cwwwlass, 'show'])->name('history');
-
     Route::post('/api/addOrganization', [OrganizationActionController::class, 'addOrganization']);
     Route::put('/api/editOrganization', [OrganizationActionController::class, 'editOrganization']);
     Route::delete('/api/deleteOrganization', [OrganizationActionController::class, 'deleteOrganization']);
