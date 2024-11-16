@@ -6,6 +6,7 @@
     <title>Voting Aktif</title>
 </head>
 <body>
+    <x-nav-bar-auth></x-nav-bar-auth>
     <nav>
         <div class="nav-container">
             <ul class="nav-menu">
@@ -61,6 +62,7 @@
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
+        overflow: hidden;
     }
 
     nav {

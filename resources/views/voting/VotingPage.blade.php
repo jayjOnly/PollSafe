@@ -7,7 +7,6 @@
 </head>
 <body>
     <div container = "container">
-
         <h1 class="voting-name">VOTING {{ $vote->name }}</h1> <!--ganti jadi variabel biar bisa disesuain sm organisasi / nama voting!-->
 
         <div class="card-container">
@@ -23,6 +22,7 @@
 
             <div class="flex-vote-button">
                 <button class="vote-button" id="vote-btn">Vote</button>
+                <button class="can-button" onclick="window.history.back()" >Cancel</button>
             </div>
         </div>
     </div>
@@ -182,6 +182,27 @@
         margin-top: 20px;
         transition: all 0.3s ease;
     }
+
+    .can-button{
+        background-color: #ca2115;
+        color: white;
+        font-size: 25px;
+        font-weight:bold;
+        border: none;
+        height: 50px;
+        width: 200px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .can-button:hover{
+        transform: scale(1.05);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
     .vote-button:hover{
         transform: scale(1.05);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -194,6 +215,7 @@
         display: flex;
         justify-content: center;
         align-items: center;   
+        gap: 2rem;
     }
     .voting-name{
         margin-top:20px;
