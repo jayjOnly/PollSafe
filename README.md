@@ -77,3 +77,11 @@ The .env in local should not different with current example but remember to chan
 This Patch installation is **optional** if you encounter error with some vendor package while running the application
 1. Make sure you install git
 2. Add `C:\Program Files\Git\usr\bin` to your PATH variable. (The bin location depends on your git installation)
+
+
+# Authors
+- [@jayjOnly](https://github.com/jayjOnly) (Andrew)
+- [@UdinPatens](https://github.com/UdinPatens) (Jacky)
+- [@Ren9x](https://github.com/Ren9x) (Udin)
+- [@sethyrical](https://github.com/sethyrical) (Anjori)
+- [@SaegusaMayumi1234](https://github.com/SaegusaMayumi1234) (Julian)
