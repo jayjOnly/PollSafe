@@ -37,6 +37,17 @@ class Organization extends Model
         return $this->hasMany(OrganizationMember::class);
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'organization_members', 'organization_id', 'user_id');
+    }
+
+    //tambahan
+    public function votes()
+    {
+        return $this->hasMany(OrganizationVote::class, 'organization_id');
+    }
+
     public function leader() {
         return $this->hasOne(OrganizationMember::class)->where('role_id', OrganizationRole::ROLE_LEADER);
     }

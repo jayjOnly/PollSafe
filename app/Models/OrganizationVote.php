@@ -37,6 +37,11 @@ class OrganizationVote extends Model
     }
 
     public function vote_members() {
-        return $this->hasMany(OrganizationVoteMember::class);
+        return $this->hasMany(OrganizationVoteMember::class,'organization_vote_id');
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

@@ -7,71 +7,67 @@
 </head>
 
 <body>
+
     <x-nav-bar-auth></x-nav-bar-auth>
+    
+    <div class="table-container">
 
-    <div class="container">
-        <div class="header">
-            <h1>Organization List</h1>
-            <button class="add-button">Add Organization</button>
-        </div>
+        <table>
+            <h2>Active Votes</h2>
+            <thead>
+                <th>Voting Name</th>
+                <th>Organization Name</th>
+                <th>Ends At</th>
+                <th>Vote Status</th>
+                <th>Details</th>
+            </thead>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    
+            @foreach($organization_vote_list as $vote_list)
+            <tbody>
                 <tr>
-                    <th>Organization Name</th>
-                    <th>Organization Leader</th>
-                    <th>Member Count</th>
-                    <th>Created At</th>
-                    <th>Vote Status</th>
-                    <th>Action</th>
+                    <td>{{ $vote_list['name']}}</td>
+                    <td>{{ $vote_list['organization']}}</td>
+                    <td>{{$vote_list['end_date']}}</td>
+                    <td class ="{{ $vote_list['vote_status']? 'voted':'not-voted'}} ">{{ $vote_list['vote_status']? 'voted':'not voted'}}</td>
+                    <td> <a href='#'  
+                        class="vote-btn" {{ $vote_list['vote_status'] ? 'disabled' : '' }} 
+                        onclick="window.location.href = '{{ route('voting-active', ['organization_id' => $vote_list['organization_id']]) }}';">Vote!</a>
+                    </td>
+                   
                 </tr>
-                </thead>
-                <tbody>
+            </tbody>
+            @endforeach
+
+        </table>
+
+    </div>
+
+    <div class="table-container">
+
+        <table>
+            <h2>Voting History</h2>
+            <thead>
+                <th>Voting Name</th>
+                <th>Organization Name</th>
+                <th>Vote Count</th>
+                <th>End Date</th>
+                <th>Winner</th>
+            </thead>
+
+            @foreach($organization_history_vote_list as $vote_history_list)
+            <tbody>
                 <tr>
-                    <td>Tech Innovations Inc.</td>
-                    <td>John Doe</td>
-                    <td>150</td>
-                    <td><span class="created-at">March 10, 2023<br>9:15 AM</span></td>
-                    <td><span class="status-green">No ongoing vote</span></td>
-                    <td><button class="action-button">View Details</button></td>
+                    <td>{{ $vote_history_list['name']}}</td>
+                    <td>{{ $vote_history_list['organization']}}</td>
+                    <td>{{ $vote_history_list['vote_member_count'] }}</td>
+                    <td>{{$vote_history_list['end_date']}}</td>
+                    <td>{{ $vote_history_list['winner'] }}</td>
                 </tr>
-                <tr>
-                    <td>Green Earth Corp.</td>
-                    <td>Emma Wilson</td>
-                    <td>85</td>
-                    <td><span class="created-at">January 25, 2023<br>2:30 PM</span></td>
-                    <td><span class="status-red">3 vote is required!</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Smart Solutions Ltd.</td>
-                    <td>Michael Smith</td>
-                    <td>230</td>
-                    <td><span class="created-at">December 5, 2022<br>11:00 AM</span></td>
-                    <td><span class="status-orange">3 ongoing vote</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Health Plus Inc.</td>
-                    <td>Sarah Connor</td>
-                    <td>120</td>
-                    <td><span class="created-at">February 12, 2023<br>1:45 PM</span></td>
-                    <td><span class="status-green">No ongoing vote</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                <tr>
-                    <td>Bright Future NGO</td>
-                    <td>James Lee</td>
-                    <td>45</td>
-                    <td><span class="created-at">May 18, 2022<br>10:00 AM</span></td>
-                    <td><span class="status-red">3 vote is required!</span></td>
-                    <td><button class="action-button">View Details</button></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+            @endforeach
+
+        </table>
+
     </div>
 
     <x-footer></x-footer>
@@ -79,120 +75,127 @@
 </html>
 
 <style>
-    body {
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        
+    *{
         font-family: Arial, sans-serif;
-        background-color: #fafafa;
     }
 
-    .container {
-        /* background: linear-gradient(135deg, rgba(0, 105, 255, 0.8), rgba(0, 255, 255, 0.5)),
-                    radial-gradient(circle, rgba(0, 105, 255, 0.5) 0%, rgba(0, 255, 255, 0.2) 70%);
-        background-blend-mode: multiply; */
-        padding: 10px;
-        flex: 1;
-        
-        
+    body {
+        background-color: #f0f0f0;
     }
-    
-    .header {
+    h1 {
+        text-align: center;
+    }
+
+    h2{
+        margin-top:20px;
+        margin-left: 100px;
+        margin-bottom: 10px;
+    }
+    .page-title{
+        margin: 20px 20px;
+    }
+
+    .tabs {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 5px 0;
-        padding: 0 15px;
+        justify-content: center;
+        margin-bottom: 20px;
+        margin-top:20px;
     }
 
-    .header h1 {
-        font-size: 24px;
-        color: #333;
+    .tab-button {
+        padding: 10px 20px;
+        cursor: pointer;
+        background-color: #ddd;
+        border: none;
+        margin-right: 5px;
+        transition: background-color 0.3s;
     }
 
-    .add-button {
-        margin-left: 10px;
-        padding: 10px 15px;
-        font-size: 14px;
+    .tab-button.active {
+        background-color: #007bff;
         color: white;
-        background-color: #28a745;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    .voted {
+        color: green;
+    }
+
+    .not-voted {
+        color: red;
+    }
+
+    .vote-btn {
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        text-decoration: none;
+    }
+
+    .vote-btn[disabled] {
+        background-color: gray;
+        cursor: not-allowed;
     }
 
     .table-container {
         overflow-x: auto;
         border-color: #888888;
         border-width: 5px;
+        
     }
 
     table {
-        width: 100%;
+        width: 85%;
         border-collapse: collapse;
+        margin: auto;
         margin-top: 5px;
     }
 
+
     th, td {
         padding: 15px;
-        text-align: left;
+        text-align: center;
         border-bottom: 0.5px solid #e0e0e0;
     }
 
     th {
-        font-weight: bold;
-        color: #555555;
+        font-style:bold;
+        color: #000000;
         border-bottom: 1px solid #d0d0d0;
         background-color: #fefefe;
+        align-content: center;
+    }
+
+    td{
+        color:  #2b2b2b;
     }
 
     tr {
+
         background-color: #fefefe;
+       
     }
 
     tr:hover {
         background-color: rgb(248, 248, 248);
     }
 
-    .created-at {
-        color: #888888;
-        font-size: 14px;
+    .footer-container{
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:100%;
     }
 
-    .action-button {
-        padding: 8px 12px;
-        font-size: 14px;
-        color: white;
-        background-color: #007bff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .action-button:hover {
-        background-color: #006adc;
-    }
-
-    .status-green {
-        color: #28a745;
-        font-weight: bold;
-    }
-
-    .status-red {
-        color: #dc3545;
-        font-weight: bold;
-    }
-
-    .status-orange {
-        color: #fd7e14;
-        font-weight: bold;
-    }
-
-    @media only screen and (max-width: 768px) {
-        .feature-container {
-            grid-template-columns: 1fr; 
-        }
-    }
 </style>
+
