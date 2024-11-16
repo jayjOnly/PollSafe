@@ -3,15 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
+
+    public $incrementing = false; // Disable auto-incrementing for the primary key
+
+    protected $keyType = 'string'; // Set the key type as string
 
     /**
      * The attributes that are mass assignable.
@@ -48,33 +52,28 @@ class User extends Authenticatable
         ];
     }
 
-    public function admin()
+    // Automatically generate a UUID for the id attribute
+    protected static function boot()
     {
-        return $this->hasOne(Admin::class);
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = (string) Str::uuid();
+            }
+
+            if (is_null($model->role_id)) {
+                $model->role_id = UserRole::ROLE_USER; // Set the default role to user
+            }
+        });
+    }
+
+    public function organization_members() {
+        return $this->hasMany(OrganizationMember::class);
     }
 
     public function organizations()
     {
-        return $this->belongsToMany(Organization::class)->withPivot('role');
-    }
-
-    public function createdOrganizations()
-    {
-        return $this->hasMany(Organization::class, 'created_by');
-    }
-
-    public function voter()
-    {
-        return $this->hasOne(Voters::class);
-    }
-
-    public function candidate()
-    {
-        return $this->hasOne(Candidates::class);
-    }
-
-    public function auditLogs()
-    {
-        return $this->hasMany(AuditLogs::class);
+        return $this->belongsToMany(Organization::class, 'organization_members', 'user_id', 'organization_id');
     }
 }
