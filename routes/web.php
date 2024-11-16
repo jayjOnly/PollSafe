@@ -22,6 +22,10 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+Route::fallback(function () {
+    abort(404);
+});
+
 Route::get('/home', [HomeController::class, 'show'])->name('home');
 Route::get('/about-us', [AboutUsController::class, 'show'])->name('about-us');
 Route::get('/faq', [FAQController::class, 'show'])->name('faq');
