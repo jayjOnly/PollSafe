@@ -36,7 +36,7 @@
                             <div class="vote-title">{{ $vote['name'] }}</div>
                             <div>
                                 <p>Total Suara: {{ $vote['vote_member_count'] }}</p>
-                                <p>Berakhir Pada: {{ $vote['end_date'] }}</p>
+                                <p>Berakhir Pada: {{ date('d F Y H:i', strtotime($vote['end_date'])) }}</p>
                                 <p>Pemenang: {{ $vote['winner'] }}</p>
                             </div>
                         </div>
@@ -60,7 +60,6 @@
     body {
         font-family: Arial, sans-serif;
         background-color: #f4f4f4;
-        overflow: hidden;
     }
 
     nav {

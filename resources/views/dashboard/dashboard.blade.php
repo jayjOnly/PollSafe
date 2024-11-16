@@ -27,7 +27,7 @@
                 <tr>
                     <td>{{ $vote_list['name']}}</td>
                     <td>{{ $vote_list['organization']}}</td>
-                    <td>{{$vote_list['end_date']}}</td>
+                    <td>{{ date('d F Y H:i', strtotime($vote_list['end_date'])) }}</td>
                     <td class ="{{ $vote_list['vote_status']? 'voted':'not-voted'}} ">{{ $vote_list['vote_status']? 'voted':'not voted'}}</td>
                     <td> <a href='#'  
                         class="vote-btn" {{ $vote_list['vote_status'] ? 'disabled' : '' }} 
@@ -60,7 +60,7 @@
                     <td>{{ $vote_history_list['name']}}</td>
                     <td>{{ $vote_history_list['organization']}}</td>
                     <td>{{ $vote_history_list['vote_member_count'] }}</td>
-                    <td>{{$vote_history_list['end_date']}}</td>
+                    <td>{{ date('d F Y H:i', strtotime($vote_history_list['end_date'])) }}</td>
                     <td>{{ $vote_history_list['winner'] }}</td>
                 </tr>
             </tbody>
