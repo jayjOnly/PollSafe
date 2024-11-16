@@ -58,7 +58,9 @@
                         <th>Nama</th>
                         <th>Email</th>
                         <th>Role</th> <th>Bergabung Sejak</th>
-                        <th>Aksi</th>
+                        @if($is_leader)
+                            <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
